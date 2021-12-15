@@ -140,6 +140,7 @@ public class MecanumFieldOriented extends OpMode
         double forward = -gamepad1.left_stick_y;
         double rotate  =  gamepad1.right_stick_x;
         double heading = imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYX, AngleUnit.DEGREES).thirdAngle;
+        double armPwr = -gamepad2.left_stick_y;
 
         // Tank Mode uses one stick to control each wheel.
         // - This requires no math, but it is hard to drive forward slowly and keep straight.
@@ -163,6 +164,9 @@ public class MecanumFieldOriented extends OpMode
             telemetry.addLine("position 50");
             telemetry.update();
         }
+
+        //set arm power
+        arm.setPower(armPwr);
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());

@@ -39,6 +39,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.arcrobotics.ftclib.hardware.RevIMU;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -70,6 +71,8 @@ public class MecanumFieldOriented extends OpMode
     private Motor backRight = null;
     private DcMotor arm = null;
     private BNO055IMU imu = null;
+    private Servo grabber = null;
+    private Servo wrist = null;
 
     // Create the Mecanum drive
     MecanumDrive mdrive = new MecanumDrive(frontLeft, frontRight, backLeft, backRight);
@@ -81,7 +84,7 @@ public class MecanumFieldOriented extends OpMode
     public void init() {
         telemetry.addData("Status", "Initialized");
 
-        // Initialize the hardware variabackLeftes. Note that the strings used here as parameters
+        // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
         frontLeft  = hardwareMap.get(Motor.class, "front_left");
@@ -90,6 +93,8 @@ public class MecanumFieldOriented extends OpMode
         backRight = hardwareMap.get(Motor.class, "back_right");
         arm = hardwareMap.get(DcMotor.class, "arm");
         imu = hardwareMap.get(BNO055IMU.class, "gyro");
+        grabber = hardwareMap.get(Servo.class, "grabber");
+        wrist = hardwareMap.get(Servo.class, "wrist");
 
 
 
@@ -143,6 +148,21 @@ public class MecanumFieldOriented extends OpMode
 
         // Send calculated power to wheels
         mdrive.driveFieldCentric(strafe, forward, rotate, heading);
+
+        //set grabber positions
+        if (gamepad2.a) {
+            grabber.setPosition(0.7);
+            telemetry.addLine("position 20");
+            telemetry.update();
+        } else if (gamepad2.b) {
+            grabber.setPosition(0.45);
+            telemetry.addLine("position 30");
+            telemetry.update();
+        } else if (gamepad2.y) {
+            grabber.setPosition(0.1);
+            telemetry.addLine("position 50");
+            telemetry.update();
+        }
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());

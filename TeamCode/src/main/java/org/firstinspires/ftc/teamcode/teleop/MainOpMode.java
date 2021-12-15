@@ -61,7 +61,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
 @TeleOp(name="FieldOriented", group="Iterative Opmode")
 
-public class MecanumFieldOriented extends OpMode
+public class MainOpMode extends OpMode
 {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -142,11 +142,6 @@ public class MecanumFieldOriented extends OpMode
         double heading = imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYX, AngleUnit.DEGREES).thirdAngle;
         double armPwr = -gamepad2.left_stick_y;
 
-        // Tank Mode uses one stick to control each wheel.
-        // - This requires no math, but it is hard to drive forward slowly and keep straight.
-        // leftPower  = -gamepad1.left_stick_y ;
-        // rightPower = -gamepad1.right_stick_y ;
-
         // Send calculated power to wheels
         mdrive.driveFieldCentric(strafe, forward, rotate, heading);
 
@@ -170,6 +165,7 @@ public class MecanumFieldOriented extends OpMode
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
+        telemetry.addData("Heading", heading);
     }
 
     /*

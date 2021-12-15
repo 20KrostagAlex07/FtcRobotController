@@ -40,6 +40,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.arcrobotics.ftclib.hardware.RevIMU;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+
 /**
  * This file contains an example of an iterative (Non-Linear) "OpMode".
  * An OpMode is a 'program' that runs in either the autonomous or the teleop period of an FTC match.
@@ -65,7 +69,7 @@ public class MecanumFieldOriented extends OpMode
     private Motor backLeft = null;
     private Motor backRight = null;
     private DcMotor arm = null;
-    private BNO055IMU gyro = null;
+    private BNO055IMU imu = null;
 
     // Create the Mecanum drive
     MecanumDrive mdrive = new MecanumDrive(frontLeft, frontRight, backLeft, backRight);
@@ -85,7 +89,7 @@ public class MecanumFieldOriented extends OpMode
         backLeft = hardwareMap.get(Motor.class, "back_left");
         backRight = hardwareMap.get(Motor.class, "back_right");
         arm = hardwareMap.get(DcMotor.class, "arm");
-        gyro = hardwareMap.get(BNO055IMU.class, "gyro");
+        imu = hardwareMap.get(BNO055IMU.class, "gyro");
 
 
 
@@ -130,7 +134,7 @@ public class MecanumFieldOriented extends OpMode
         double strafe = gamepad1.left_stick_x;
         double forward = -gamepad1.left_stick_y;
         double rotate  =  gamepad1.right_stick_x;
-        double heading = gyro.getHeading();
+        double heading = imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYX, AngleUnit.DEGREES).thirdAngle;
 
         // Tank Mode uses one stick to control each wheel.
         // - This requires no math, but it is hard to drive forward slowly and keep straight.

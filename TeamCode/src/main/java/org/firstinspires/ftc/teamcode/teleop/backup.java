@@ -221,7 +221,7 @@ public class backup extends OpMode
 
         //set ducky motor
         if(gamepad1.x || gamepad2.x){
-            duckies.setPower(0.8);
+            duckies.setPower(0.5);
         } else{
             duckies.setPower(0);
         }

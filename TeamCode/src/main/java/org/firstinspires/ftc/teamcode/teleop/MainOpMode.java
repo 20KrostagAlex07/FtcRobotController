@@ -75,13 +75,13 @@ public class MainOpMode extends OpMode
     public Motor backLeft = new Motor(hardwareMap, "back_left");
     public Motor backRight = new Motor(hardwareMap, "back_right");
 
-    // grab the internal DcMotor object
+    // grab the internal DcMotor objectsd
     DcMotor front_left = frontLeft.motor;
     DcMotor front_right = frontRight.motor;
     DcMotor back_left = backLeft.motor;
     DcMotor back_right = backRight.motor;
-
-    // Create the Mecanum drive
+//
+//    // Create the Mecanum drive
     MecanumDrive mdrive = new MecanumDrive(frontLeft, frontRight, backLeft, backRight);
 
     /*
@@ -94,10 +94,10 @@ public class MainOpMode extends OpMode
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        // frontLeft  = hardwareMap.get(Motor.class, "front_left");
-        // frontRight = hardwareMap.get(Motor.class, "front_right");
-        // backLeft = hardwareMap.get(Motor.class, "back_left");
-        // backRight = hardwareMap.get(Motor.class, "back_right");
+//         frontLeft  = hardwareMap.get(Motor.class, "front_left");
+//         frontRight = hardwareMap.get(Motor.class, "front_right");
+//         backLeft = hardwareMap.get(Motor.class, "back_left");
+//         backRight = hardwareMap.get(Motor.class, "back_right");
         arm = hardwareMap.get(DcMotor.class, "arm1");
         duckies = hardwareMap.get(DcMotor.class, "duckies");
         imu = hardwareMap.get(BNO055IMU.class, "imu");
@@ -151,7 +151,7 @@ public class MainOpMode extends OpMode
         double armPwr = -gamepad2.left_stick_y;
 
         // Send calculated power to wheels
-        mdrive.driveFieldCentric(strafe, forward, rotate, heading);
+        //mdrive.driveFieldCentric(strafe, forward, rotate, heading);
 
         //set grabber positions
         if (gamepad2.a) {

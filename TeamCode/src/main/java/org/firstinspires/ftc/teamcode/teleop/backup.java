@@ -145,7 +145,7 @@ public class backup extends OpMode
 
         double strafe = gamepad1.left_stick_x;
         double forward = -gamepad1.left_stick_y;
-        double rotate  =  gamepad1.right_stick_x;
+        double rotate  =  gamepad1.right_stick_x * 1.1;
 
 
 
@@ -165,8 +165,54 @@ public class backup extends OpMode
             telemetry.update();
         }
 
+        double frontLeftPower = forward + strafe + rotate;
+        double backLeftPower = forward - strafe + rotate;
+        double frontRightPower = forward - strafe - rotate;
+        double backRightPower = forward + strafe -rotate;
 
-        //set wheel powers
+        // Put powers in the range of -1 to 1 only if they aren't already
+        // Not checking would cause us to always drive at full speed
+        if (Math.abs(frontLeftPower) > 1 || Math.abs(backLeftPower) > 1 ||
+                Math.abs(frontRightPower) > 1 || Math.abs(backRightPower) > 1) {
+            // Find the largest power
+            double max;
+            max = Math.max(Math.abs(frontLeftPower), Math.abs(backLeftPower));
+            max = Math.max(Math.abs(frontRightPower), max);
+            max = Math.max(Math.abs(backRightPower), max);
+
+            // Divide everything by max (it's positive so we don't need to worry
+            // about signs)
+            frontLeftPower /= max;
+            backLeftPower /= max;
+            frontRightPower /= max;
+            backRightPower /= max;
+        }
+        if (gamepad1.right_bumper) {
+            frontLeft.setPower(frontLeftPower * 0.25);
+            backLeft.setPower(backLeftPower * 0.25);
+            frontRight.setPower(frontRightPower * 0.25);
+            backRight.setPower(backRightPower * 0.25);
+            telemetry.addLine("Speed one quarter");
+            telemetry.update();
+        } else if (gamepad1.left_bumper) {
+            frontLeft.setPower(frontLeftPower * 0.75);
+            backLeft.setPower(backLeftPower * 0.75);
+            frontRight.setPower(frontRightPower * 0.75);
+            backRight.setPower(backRightPower * 0.75);
+            telemetry.addLine("Speed 3/4");
+            telemetry.update();
+        } else {
+            frontLeft.setPower(frontLeftPower);
+            backLeft.setPower(backLeftPower);
+            frontRight.setPower(frontRightPower);
+            backRight.setPower(backRightPower);
+            telemetry.addLine("Speed full");
+            telemetry.update();
+        }
+
+        //set wrist position
+        double wristPos =- gamepad2.right_stick_y;
+        wrist.setPosition(wristPos);
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());

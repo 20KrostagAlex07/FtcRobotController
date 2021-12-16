@@ -75,7 +75,7 @@ public class MainOpMode extends OpMode
     public Motor backLeft = new Motor(hardwareMap, "back_left");
     public Motor backRight = new Motor(hardwareMap, "back_right");
 
-    // grab the internal DcMotor objectsd
+    // grab the internal DcMotor objects
     DcMotor front_left = frontLeft.motor;
     DcMotor front_right = frontRight.motor;
     DcMotor back_left = backLeft.motor;
@@ -94,10 +94,10 @@ public class MainOpMode extends OpMode
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-//         frontLeft  = hardwareMap.get(Motor.class, "front_left");
-//         frontRight = hardwareMap.get(Motor.class, "front_right");
-//         backLeft = hardwareMap.get(Motor.class, "back_left");
-//         backRight = hardwareMap.get(Motor.class, "back_right");
+         frontLeft  = (Motor) hardwareMap.get("front_left");
+         frontRight = (Motor) hardwareMap.get("front_right");
+         backLeft = (Motor) hardwareMap.get("back_left");
+         backRight = (Motor) hardwareMap.get("back_right");
         arm = hardwareMap.get(DcMotor.class, "arm1");
         duckies = hardwareMap.get(DcMotor.class, "duckies");
         imu = hardwareMap.get(BNO055IMU.class, "imu");

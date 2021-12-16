@@ -5,31 +5,23 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name = "Backup", group = "Competition")
-public class backupTeleOp extends LinearOpMode {
+@TeleOp(name = "pid", group = "Competition")
+public class pidEnabled extends LinearOpMode {
 
-    private DcMotor lF;
-    private DcMotor lB;
-    private DcMotor rF;
-    private DcMotor rB;
-    private DcMotor arm1;
-    private DcMotor duckies;
-    private Servo wrist1;
-    private Servo grabber;
+
 
     @Override
     public void runOpMode() {
         // Declare our motors
         // Make sure your ID's match your configuration
-
-        lF = hardwareMap.dcMotor.get("front_left");
-        lB = hardwareMap.dcMotor.get("back_left");
-        rF = hardwareMap.dcMotor.get("front_right");
-        rB = hardwareMap.dcMotor.get("back_right");
-        arm1 = hardwareMap.dcMotor.get("arm1");
-        duckies = hardwareMap.dcMotor.get("duckies");
-        wrist1 = hardwareMap.servo.get("wrist");
-        grabber = hardwareMap.servo.get("grabber");
+        DcMotor lF = hardwareMap.dcMotor.get("front_left");
+        DcMotor lB = hardwareMap.dcMotor.get("back_left");
+        DcMotor rF = hardwareMap.dcMotor.get("front_right");
+        DcMotor rB = hardwareMap.dcMotor.get("back_right");
+        DcMotor arm1 = hardwareMap.dcMotor.get("arm1");
+        DcMotor duckies = hardwareMap.dcMotor.get("duckies");
+        Servo wrist1 = hardwareMap.servo.get("wrist");
+        Servo grabber = hardwareMap.servo.get("grabber");
 
 
         // Reverse the right side motors

@@ -187,6 +187,8 @@ public class backup extends OpMode
             frontRightPower /= max;
             backRightPower /= max;
         }
+
+        //change speed of robot
         if (gamepad1.right_bumper) {
             frontLeft.setPower(frontLeftPower * 0.25);
             backLeft.setPower(backLeftPower * 0.25);
@@ -213,6 +215,9 @@ public class backup extends OpMode
         //set wrist position
         double wristPos =- gamepad2.right_stick_y;
         wrist.setPosition(wristPos);
+
+        //set arm power
+        arm.setPower(-gamepad2.left_stick_y);
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());

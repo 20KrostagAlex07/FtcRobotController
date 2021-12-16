@@ -31,10 +31,10 @@ public class PID extends LinearOpMode {
 
         while (opModeIsActive()) {
             // update pid controller
-            double command = control.update(targetPosition,
-                    motor.getCurrentPosition());
+           // double command = control.update(targetPosition,
+             //       motor.getCurrentPosition());
             // assign motor the PID output
-            motor.setPower(command);
+           // motor.setPower(command);
         }
     }
 }

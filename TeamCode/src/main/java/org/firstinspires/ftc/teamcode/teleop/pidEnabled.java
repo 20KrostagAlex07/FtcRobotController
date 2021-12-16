@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name = "Backup", group = "Competition")
 public class pidEnabled extends LinearOpMode {
@@ -16,6 +17,7 @@ public class pidEnabled extends LinearOpMode {
     private DcMotor duckies;
     private Servo wrist1;
     private Servo grabber;
+    private ElapsedTime timer = new ElapsedTime();
 
     @Override
     public void runOpMode() {
@@ -153,6 +155,15 @@ public class pidEnabled extends LinearOpMode {
             } else {
                 duckies.setPower(0);
             }
+
+
+
+
+            //Alternative arm code using PID
+            //TODO
+
+
+
         }
     }
 }

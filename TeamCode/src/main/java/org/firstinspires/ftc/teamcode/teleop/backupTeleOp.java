@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 @TeleOp(name = "Backup", group = "Competition")
 public class backupTeleOp extends LinearOpMode {
 
-    int ticks = 0;
+
 
     @Override
     public void runOpMode() {
@@ -62,7 +62,7 @@ public class backupTeleOp extends LinearOpMode {
             if (Math.abs(frontLeftPower) > 1 || Math.abs(backLeftPower) > 1 ||
                     Math.abs(frontRightPower) > 1 || Math.abs(backRightPower) > 1) {
                 // Find the largest power
-                double max = 0;
+                double max;
                 max = Math.max(Math.abs(frontLeftPower), Math.abs(backLeftPower));
                 max = Math.max(Math.abs(frontRightPower), max);
                 max = Math.max(Math.abs(backRightPower), max);
@@ -113,7 +113,7 @@ public class backupTeleOp extends LinearOpMode {
             }
 
             //set wrist position
-            // wrist1.setPosition(gamepad2.right_trigger);
+             wrist1.setPosition(-gamepad2.right_stick_y);
 
             //TODO
             //set wrist position option 2
@@ -131,20 +131,18 @@ public class backupTeleOp extends LinearOpMode {
 
             //TODO
 
+            arm1.setPower(-gamepad2.left_stick_y/2);
 
 
             telemetry.addData("Arm Position", arm1.getCurrentPosition());
 
 
-            ticks = ticks - (-(int) gamepad2.left_stick_y * 2);
-            arm1.setTargetPosition(ticks);
-            arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            telemetry.addData("ticks", ticks);
+
 
             if (gamepad1.x || gamepad2.x) {
-                //  duckies.setPower(-0.8);
+                  duckies.setPower(-0.8);
             } else {
-                // duckies.setPower(0);
+                 duckies.setPower(0);
             }
         }
     }

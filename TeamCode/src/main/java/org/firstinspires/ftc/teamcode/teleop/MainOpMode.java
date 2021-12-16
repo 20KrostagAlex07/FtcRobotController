@@ -32,7 +32,7 @@ package org.firstinspires.ftc.teamcode.teleop;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -65,14 +65,21 @@ public class MainOpMode extends OpMode
 {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private Motor frontLeft = null;
-    private Motor frontRight = null;
-    private Motor backLeft = null;
-    private Motor backRight = null;
     private DcMotor arm = null;
+    private DcMotor duckies = null;
     private BNO055IMU imu = null;
-    private Servo grabber = null;
     private Servo wrist = null;
+    private Servo grabber = null;
+    public Motor frontLeft = new Motor(hardwareMap, "front_left");
+    public Motor frontRight = new Motor(hardwareMap, "front_right");
+    public Motor backLeft = new Motor(hardwareMap, "back_left");
+    public Motor backRight = new Motor(hardwareMap, "back_right");
+
+    // grab the internal DcMotor object
+    DcMotor front_left = frontLeft.motor;
+    DcMotor front_right = frontRight.motor;
+    DcMotor back_left = backLeft.motor;
+    DcMotor back_right = backRight.motor;
 
     // Create the Mecanum drive
     MecanumDrive mdrive = new MecanumDrive(frontLeft, frontRight, backLeft, backRight);
@@ -87,12 +94,13 @@ public class MainOpMode extends OpMode
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        frontLeft  = hardwareMap.get(Motor.class, "front_left");
-        frontRight = hardwareMap.get(Motor.class, "front_right");
-        backLeft = hardwareMap.get(Motor.class, "back_left");
-        backRight = hardwareMap.get(Motor.class, "back_right");
-        arm = hardwareMap.get(DcMotor.class, "arm");
-        imu = hardwareMap.get(BNO055IMU.class, "gyro");
+        // frontLeft  = hardwareMap.get(Motor.class, "front_left");
+        // frontRight = hardwareMap.get(Motor.class, "front_right");
+        // backLeft = hardwareMap.get(Motor.class, "back_left");
+        // backRight = hardwareMap.get(Motor.class, "back_right");
+        arm = hardwareMap.get(DcMotor.class, "arm1");
+        duckies = hardwareMap.get(DcMotor.class, "duckies");
+        imu = hardwareMap.get(BNO055IMU.class, "imu");
         grabber = hardwareMap.get(Servo.class, "grabber");
         wrist = hardwareMap.get(Servo.class, "wrist");
 
@@ -127,7 +135,7 @@ public class MainOpMode extends OpMode
      */
     @Override
     public void loop() {
-        // Setup a variabackLefte for each drive wheel to save power level for telemetry
+        // Setup a variable for each drive wheel to save power level for telemetry
         double leftPower;
         double rightPower;
 

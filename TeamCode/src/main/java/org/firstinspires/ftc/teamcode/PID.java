@@ -46,13 +46,13 @@ public class PID extends LinearOpMode {
         while(!opModeIsActive()){}
 
         while(opModeIsActive()){
-            pidControlArm(0.3, gamepad1.a, 1, pidCount);
-            pidControlArm(0.8, gamepad1.b, 0.5, pidCount);
-            pidControlArm(0.6, gamepad1.y, 0.2, pidCount);
-            pidControlArm(1.0, gamepad1.x, 0.4, pidCount);
+
+            pidControlArm(0.3, true, 0.5, pidCount);
+
             if(notPressedCount == pidCount){
                 arm.setPower(0);
             }
+
             pidCount = 0;
             notPressedCount = 0;
             telemetry.addData(">", potentiometer.getVoltage());

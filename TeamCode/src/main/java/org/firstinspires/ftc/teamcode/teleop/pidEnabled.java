@@ -5,23 +5,31 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name = "pid", group = "Competition")
+@TeleOp(name = "Backup", group = "Competition")
 public class pidEnabled extends LinearOpMode {
 
-
+    private DcMotor lF;
+    private DcMotor lB;
+    private DcMotor rF;
+    private DcMotor rB;
+    private DcMotor arm1;
+    private DcMotor duckies;
+    private Servo wrist1;
+    private Servo grabber;
 
     @Override
     public void runOpMode() {
         // Declare our motors
         // Make sure your ID's match your configuration
-        DcMotor lF = hardwareMap.dcMotor.get("front_left");
-        DcMotor lB = hardwareMap.dcMotor.get("back_left");
-        DcMotor rF = hardwareMap.dcMotor.get("front_right");
-        DcMotor rB = hardwareMap.dcMotor.get("back_right");
-        DcMotor arm1 = hardwareMap.dcMotor.get("arm1");
-        DcMotor duckies = hardwareMap.dcMotor.get("duckies");
-        Servo wrist1 = hardwareMap.servo.get("wrist");
-        Servo grabber = hardwareMap.servo.get("grabber");
+
+        lF = hardwareMap.dcMotor.get("front_left");
+        lB = hardwareMap.dcMotor.get("back_left");
+        rF = hardwareMap.dcMotor.get("front_right");
+        rB = hardwareMap.dcMotor.get("back_right");
+        arm1 = hardwareMap.dcMotor.get("arm1");
+        duckies = hardwareMap.dcMotor.get("duckies");
+        wrist1 = hardwareMap.servo.get("wrist");
+        grabber = hardwareMap.servo.get("grabber");
 
 
         // Reverse the right side motors
@@ -36,9 +44,10 @@ public class pidEnabled extends LinearOpMode {
         rF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        arm1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //reset encoders
-        arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        arm1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         waitForStart();
 
@@ -113,7 +122,7 @@ public class pidEnabled extends LinearOpMode {
             }
 
             //set wrist position
-             wrist1.setPosition(-gamepad2.right_stick_y);
+            wrist1.setPosition(-gamepad2.right_stick_y);
 
             //TODO
             //set wrist position option 2
@@ -140,9 +149,9 @@ public class pidEnabled extends LinearOpMode {
 
 
             if (gamepad1.x || gamepad2.x) {
-                  duckies.setPower(-0.8);
+                duckies.setPower(-0.8);
             } else {
-                 duckies.setPower(0);
+                duckies.setPower(0);
             }
         }
     }

@@ -57,7 +57,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
  * Remove or comment out the @DisabackLefted line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="FieldOriented", group="Iterative Opmode")
+@TeleOp(name="Backup", group="Iterative Opmode")
 
 public class backup extends OpMode
 {
@@ -219,9 +219,16 @@ public class backup extends OpMode
         //set arm power
         arm.setPower(-gamepad2.left_stick_y);
 
+        //set ducky motor
+        if(gamepad1.x || gamepad2.x){
+            duckies.setPower(0.8);
+        } else{
+            duckies.setPower(0);
+        }
+
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
-        // telemetry.addData("Heading", heading);
+        telemetry.addData("Wrist Position", wristPos);
     }
 
     /*

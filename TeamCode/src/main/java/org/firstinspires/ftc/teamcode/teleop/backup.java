@@ -56,6 +56,7 @@ public class backup extends OpMode
     private BNO055IMU imu;
     private Servo wrist;
     private Servo grabber;
+    private float wristPos = 0;
     public DcMotor frontLeft;
     public DcMotor frontRight;
     public DcMotor backLeft;
@@ -115,6 +116,7 @@ public class backup extends OpMode
         frontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         backLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         arm.setDirection(DcMotorSimple.Direction.REVERSE);
+
 
         //set zeropowerbehavior
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -200,15 +202,26 @@ public class backup extends OpMode
             telemetry.update();
         }
 
-        //set wrist position
-        float wristPos;
+        //adjust wrist position by gamepad2 right stick y
         wristPos = wristPos - gamepad2.right_stick_y;
 
+        //clamp between 300 and 0
+        if(wristPos > 300){
+            wristPos = 300;
+        } else if(wristPos < 0){
+            wristPos = 0;
+        }
+
+        //set position
+        wrist.setPosition(wristPos / 300);
+
         //set arm power
-        if (gamepad2.left_bumper || gamepad2.right_bumper){
+        if (gamepad2.left_bumper){
             arm.setPower(-0.1);
-        } else{
-            arm.setPower(-gamepad2.left_stick_y);
+        } else if(gamepad2.right_bumper){
+            arm.setPower(0.1);
+        }else{
+            arm.setPower(-gamepad2.left_stick_y * 0.7);
         }
 
 

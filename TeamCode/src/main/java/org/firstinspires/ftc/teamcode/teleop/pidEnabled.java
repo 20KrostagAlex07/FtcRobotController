@@ -237,9 +237,9 @@ public class pidEnabled extends OpMode
 
          */
 
-        double Kp = someValue;
-        double Ki = someValue;
-        double Kd = someValue;
+        double Kp;
+        double Ki;
+        double Kd;
 
         double reference;
 
@@ -250,35 +250,33 @@ public class pidEnabled extends OpMode
 // Elapsed timer class from SDK, please use it, it's epic
 
 
-        while () {
+        while (true) {
 
 
             // obtain the encoder position
-            double encoderPosition = arm.getPosition();
+           // double encoderPosition = arm.getPosition();
             // calculate the error
-            double error = reference - encoderPosition;
+          //  double error = reference - encoderPosition;
 
             // rate of change of the error
-            double derivative = (error - lastError) / runtime.seconds();
+        //    double derivative = (error - lastError) / runtime.seconds();
 
             // sum of all error over time
-            double integralSum = (integralSum + (error * runtime.seconds()));
+        //    double integralSum = (integralSum + (error * runtime.seconds()));
 
-            double out = (Kp * error) + (Ki * integralSum) + (Kd * derivative);
+        //    double out = (Kp * error) + (Ki * integralSum) + (Kd * derivative);
 
-            arm.setPower(out);
+        //    arm.setPower(out);
 
-            lastError = error;
+       //     lastError = error;
 
             // reset the timer for next time
-            timer.reset();
+            runtime.reset();
 
         }
 
 
         // Show the elapsed game time and wheel power.
-        telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.addData("Wrist Position", wristPos);
     }
 
     /*

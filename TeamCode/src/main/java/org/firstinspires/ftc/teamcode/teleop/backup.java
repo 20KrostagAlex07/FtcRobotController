@@ -43,19 +43,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
-/**
- * This file contains an example of an iterative (Non-Linear) "OpMode".
- * An OpMode is a 'program' that runs in either the autonomous or the teleop period of an FTC match.
- * The names of OpModes appear on the menu of the FTC Driver Station.
- * When an selection is made frontRightom the menu, the corresponding OpMode
- * class is instantiated on the Robot Controller and executed.
- *
- * This particular OpMode just executes a basic Tank Drive Teleop for a two wheeled robot
- * It includes all the skeletal structure that all iterative OpModes contain.
- *
- * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @DisabackLefted line to add this opmode to the Driver Station OpMode list
- */
+
 
 @TeleOp(name="Backup", group="Iterative Opmode")
 
@@ -213,11 +201,16 @@ public class backup extends OpMode
         }
 
         //set wrist position
-        double wristPos =- gamepad2.right_stick_y;
-        wrist.setPosition(wristPos);
+        float wristPos;
+        wristPos = wristPos - gamepad2.right_stick_y;
 
         //set arm power
-        arm.setPower(-gamepad2.left_stick_y);
+        if (gamepad2.left_bumper || gamepad2.right_bumper){
+            arm.setPower(-0.1);
+        } else{
+            arm.setPower(-gamepad2.left_stick_y);
+        }
+
 
         //set ducky motor
         if(gamepad1.x || gamepad2.x){

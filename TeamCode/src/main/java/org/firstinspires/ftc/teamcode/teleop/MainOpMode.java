@@ -82,6 +82,10 @@ public class MainOpMode extends OpMode
     DcMotor front_right = frontRight.motor;
     DcMotor back_left = backLeft.motor;
     DcMotor back_right = backRight.motor;
+
+    //gyro stuff
+    private double previousHeading = 0;
+    private double integratedHeading = 0;
 //
 //    // Create the Mecanum drive
     MecanumDrive mdrive = new MecanumDrive(frontLeft, frontRight, backLeft, backRight);
@@ -152,8 +156,7 @@ public class MainOpMode extends OpMode
         double strafe = gamepad1.left_stick_x;
         double forward = -gamepad1.left_stick_y;
         double rotate  =  gamepad1.right_stick_x;
-        Orientation heading = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYX, AngleUnit.DEGREES);
-        
+        double heading = getIntegratedHeading();
         double armPwr = -gamepad2.left_stick_y;
 
         // Send calculated power to wheels
@@ -187,6 +190,22 @@ public class MainOpMode extends OpMode
      */
     @Override
     public void stop() {
+    }
+
+    private double getIntegratedHeading() {
+        double currentHeading = imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
+        double deltaHeading = currentHeading - previousHeading;
+
+        if (deltaHeading < -180) {
+            deltaHeading += 360;
+        } else if (deltaHeading >= 180) {
+            deltaHeading -= 360;
+        }
+
+        integratedHeading += deltaHeading;
+        previousHeading = currentHeading;
+
+        return integratedHeading;
     }
 
 }

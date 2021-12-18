@@ -149,6 +149,8 @@ public class blue extends OpMode {
             grabberPos--;
         }
 
+        //this is a test
+
         //set grabber position
         grabber.setPosition(grabberPos / 300);
 

@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode.teleop;
 
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
+import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -44,11 +45,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
 
+@TeleOp(name = "Blue", group = "The Real Deal")
 
-@TeleOp(name="Blue", group="The Real Deal")
-
-public class blue extends OpMode
-{
+public class blue extends OpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor arm;
@@ -56,12 +55,19 @@ public class blue extends OpMode
     private BNO055IMU imu;
     private Servo wrist;
     private Servo grabber;
+
     private float wristPos = 0;
+    private float grabberPos = 0;
+
     public DcMotor frontLeft;
     public DcMotor frontRight;
     public DcMotor backLeft;
     public DcMotor backRight;
 
+    private boolean isA = false;
+    private boolean wasA = false;
+    private int i = 0;
+    private int dir = -1;
 
 
     /*
@@ -83,8 +89,6 @@ public class blue extends OpMode
         frontRight = hardwareMap.get(DcMotor.class, "front_right");
         backLeft = hardwareMap.get(DcMotor.class, "back_left");
         backRight = hardwareMap.get(DcMotor.class, "back_right");
-
-
 
 
         // Most robots need the motor on one side to be reversed to drive forward
@@ -135,27 +139,23 @@ public class blue extends OpMode
 
         double strafe = gamepad1.left_stick_x;
         double forward = -gamepad1.left_stick_y;
-        double rotate  =  gamepad1.right_stick_x * 1.1;
-
-
+        double rotate = gamepad1.right_stick_x * 1.1;
 
 
         //set grabber positions
-        if (gamepad2.a) {
-            grabber.setPosition(0.7);
-            telemetry.addLine("position 20");
-        } else if (gamepad2.b) {
-            grabber.setPosition(0.45);
-            telemetry.addLine("position 30");
-        } else if (gamepad2.y) {
-            grabber.setPosition(0.1);
-            telemetry.addLine("position 50");
+        if(gamepad2.left_trigger == 1){
+            grabberPos++;
+        } else if(gamepad2.right_trigger == 1){
+            grabberPos--;
         }
+
+        //set grabber position
+        grabber.setPosition(grabberPos / 300);
 
         double frontLeftPower = forward + strafe + rotate;
         double backLeftPower = forward - strafe + rotate;
         double frontRightPower = forward - strafe - rotate;
-        double backRightPower = forward + strafe -rotate;
+        double backRightPower = forward + strafe - rotate;
 
         // Put powers in the range of -1 to 1 only if they aren't already
         // Not checking would cause us to always drive at full speed
@@ -176,23 +176,33 @@ public class blue extends OpMode
         }
 
         //change speed of robot
+        if ((isA = gamepad1.a) && !wasA) {
+            i++;
+        }
+
+        if (i % 2 == 0) {
+            dir = -1;
+        } else {
+            dir = 1;
+        }
+
         if (gamepad1.right_bumper) {
-            frontLeft.setPower(frontLeftPower * 0.25);
-            backLeft.setPower(backLeftPower * 0.25);
-            frontRight.setPower(frontRightPower * 0.25);
-            backRight.setPower(backRightPower * 0.25);
+            frontLeft.setPower(frontLeftPower * 0.25 * dir);
+            backLeft.setPower(backLeftPower * 0.25 * dir);
+            frontRight.setPower(frontRightPower * 0.25 * dir);
+            backRight.setPower(backRightPower * 0.25 * dir);
             telemetry.addLine("Speed one quarter");
         } else if (gamepad1.left_bumper) {
-            frontLeft.setPower(frontLeftPower * 0.75);
-            backLeft.setPower(backLeftPower * 0.75);
-            frontRight.setPower(frontRightPower * 0.75);
-            backRight.setPower(backRightPower * 0.75);
+            frontLeft.setPower(frontLeftPower * 0.75 * dir);
+            backLeft.setPower(backLeftPower * 0.75 * dir);
+            frontRight.setPower(frontRightPower * 0.75 * dir);
+            backRight.setPower(backRightPower * 0.75 * dir);
             telemetry.addLine("Speed 3/4");
         } else {
-            frontLeft.setPower(frontLeftPower);
-            backLeft.setPower(backLeftPower);
-            frontRight.setPower(frontRightPower);
-            backRight.setPower(backRightPower);
+            frontLeft.setPower(frontLeftPower * dir);
+            backLeft.setPower(backLeftPower * dir);
+            frontRight.setPower(frontRightPower * dir);
+            backRight.setPower(backRightPower * dir);
             telemetry.addLine("Speed full");
         }
 
@@ -200,29 +210,36 @@ public class blue extends OpMode
         wristPos = wristPos - gamepad2.right_stick_y;
 
         //clamp between 300 and 0
-        if(wristPos > 300){
+        if (wristPos > 300) {
             wristPos = 300;
-        } else if(wristPos < 0){
+        } else if (wristPos < 0) {
             wristPos = 0;
+        }
+
+        //clamp grabberPos
+        if (grabberPos > 300) {
+            grabberPos = 300;
+        } else if (grabberPos < 0) {
+            grabberPos = 0;
         }
 
         //set position
         wrist.setPosition(wristPos / 300);
 
         //set arm power
-        if (gamepad2.left_bumper){
+        if (gamepad2.left_bumper) {
             arm.setPower(-0.1);
-        } else if(gamepad2.right_bumper){
+        } else if (gamepad2.right_bumper) {
             arm.setPower(0.1);
-        }else{
+        } else {
             arm.setPower(gamepad2.left_stick_y * 0.7);
         }
 
 
         //set ducky motor
-        if(gamepad1.x || gamepad2.x){
+        if (gamepad1.x || gamepad2.x) {
             duckies.setPower(0.5);
-        } else{
+        } else {
             duckies.setPower(0);
         }
 
@@ -230,6 +247,8 @@ public class blue extends OpMode
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Wrist Position", wristPos);
         telemetry.update();
+
+        wasA = isA;
     }
 
     /*

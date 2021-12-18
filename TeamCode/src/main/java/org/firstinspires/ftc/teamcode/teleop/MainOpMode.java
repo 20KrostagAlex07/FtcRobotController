@@ -33,6 +33,7 @@ import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -44,6 +45,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 /**
  * This file contains an example of an iterative (Non-Linear) "OpMode".
@@ -94,17 +96,20 @@ public class MainOpMode extends OpMode
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
          frontLeft  = (Motor) hardwareMap.get("front_left");
          frontRight = (Motor) hardwareMap.get("front_right");
          backLeft = (Motor) hardwareMap.get("back_left");
          backRight = (Motor) hardwareMap.get("back_right");
         arm = hardwareMap.get(DcMotor.class, "arm1");
         duckies = hardwareMap.get(DcMotor.class, "duckies");
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        imu = (BNO055IMU) hardwareMap.gyroSensor.get("imu");
         grabber = hardwareMap.get(Servo.class, "grabber");
         wrist = hardwareMap.get(Servo.class, "wrist");
 
 
+        //Initialize gyro
+        imu.initialize(parameters);
 
 
         // Most robots need the motor on one side to be reversed to drive forward
@@ -147,11 +152,12 @@ public class MainOpMode extends OpMode
         double strafe = gamepad1.left_stick_x;
         double forward = -gamepad1.left_stick_y;
         double rotate  =  gamepad1.right_stick_x;
-        double heading = imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYX, AngleUnit.DEGREES).thirdAngle;
+        Orientation heading = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.XYX, AngleUnit.DEGREES);
+        
         double armPwr = -gamepad2.left_stick_y;
 
         // Send calculated power to wheels
-        //mdrive.driveFieldCentric(strafe, forward, rotate, heading);
+        mdrive.driveFieldCentric(strafe, forward, rotate, heading);
 
         //set grabber positions
         if (gamepad2.a) {

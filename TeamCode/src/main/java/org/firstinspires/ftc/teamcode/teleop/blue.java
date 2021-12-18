@@ -56,8 +56,8 @@ public class blue extends OpMode {
     private Servo wrist;
     private Servo grabber;
 
-    private float wristPos = 1;
-    private float grabberPos = 0;
+    private float wristPos = 150;
+    private float grabberPos = 30;
 
     public DcMotor frontLeft;
     public DcMotor frontRight;
@@ -82,7 +82,7 @@ public class blue extends OpMode {
         // step (using the FTC Robot Controller app on the phone).
         arm = hardwareMap.get(DcMotor.class, "arm1");
         duckies = hardwareMap.get(DcMotor.class, "duckies");
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        imu = hardwareMap.get(BNO055IMU.class, "gyro");
         grabber = hardwareMap.get(Servo.class, "grabber");
         wrist = hardwareMap.get(Servo.class, "wrist");
         frontLeft = hardwareMap.get(DcMotor.class, "front_left");
@@ -219,10 +219,10 @@ public class blue extends OpMode {
         }
 
         //clamp grabberPos
-        if (grabberPos > 300) {
-            grabberPos = 300;
-        } else if (grabberPos < 0) {
-            grabberPos = 0;
+        if (grabberPos > 215) {
+            grabberPos = 215;
+        } else if (grabberPos < 30) {
+            grabberPos = 30;
         }
 
         //set position

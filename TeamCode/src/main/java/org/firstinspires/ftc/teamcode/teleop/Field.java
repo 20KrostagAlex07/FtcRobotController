@@ -54,7 +54,7 @@ public class Field extends OpMode {
     private Servo grabber;
 
     private float wristPos = 150;
-    private float grabberPos = 0;
+    private float grabberPos = 30;
 
     public DcMotor frontLeft;
     public DcMotor frontRight;
@@ -90,6 +90,7 @@ public class Field extends OpMode {
         backLeft = hardwareMap.get(DcMotor.class, "back_left");
         backRight = hardwareMap.get(DcMotor.class, "back_right");
 
+        parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
 
         //Initialize gyro
         imu.initialize(parameters);
@@ -140,10 +141,11 @@ public class Field extends OpMode {
         double x = gamepad1.left_stick_x;
         double y = -gamepad1.left_stick_y;
         double theta = gamepad1.right_stick_x * 1.1;
-        double heading = getIntegratedHeading();
+        double heading = -imu.getAngularOrientation().firstAngle;
 
         double x_rotated = x * Math.cos(heading) - y * Math.sin(heading);
         double y_rotated = x * Math.sin(heading) + y * Math.cos(heading);
+
         //set grabber positions
         if(gamepad2.left_trigger == 1){
             grabberPos++;
@@ -213,6 +215,10 @@ public class Field extends OpMode {
         //adjust wrist position by gamepad2 right stick y
         wristPos = wristPos - gamepad2.right_stick_y;
 
+        if(gamepad2.a){
+            wristPos = 150;
+        }
+
         //clamp between 300 and 0
         if (wristPos > 300) {
             wristPos = 300;
@@ -264,20 +270,6 @@ public class Field extends OpMode {
     public void stop() {
     }
 
-    private double getIntegratedHeading() {
-        double currentHeading = imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
-        double deltaHeading = currentHeading - previousHeading;
 
-        if (deltaHeading < -180) {
-            deltaHeading += 360;
-        } else if (deltaHeading >= 180) {
-            deltaHeading -= 360;
-        }
-
-        integratedHeading += deltaHeading;
-        previousHeading = currentHeading;
-
-        return integratedHeading;
-    }
 
 }

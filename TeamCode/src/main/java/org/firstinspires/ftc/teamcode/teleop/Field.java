@@ -29,9 +29,6 @@
 
 package org.firstinspires.ftc.teamcode.teleop;
 
-import com.arcrobotics.ftclib.drivebase.MecanumDrive;
-import com.arcrobotics.ftclib.hardware.motors.Motor;
-import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -45,9 +42,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
 
-@TeleOp(name = "Blue", group = "The Real Deal")
+@TeleOp(name = "Field", group = "The Real Deal")
 
-public class blue extends OpMode {
+public class Field extends OpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor arm;
@@ -56,7 +53,7 @@ public class blue extends OpMode {
     private Servo wrist;
     private Servo grabber;
 
-    private float wristPos = 1;
+    private double wristPos = 1;
     private float grabberPos = 0;
 
     public DcMotor frontLeft;
@@ -68,6 +65,8 @@ public class blue extends OpMode {
     private boolean wasA = false;
     private int i = 0;
     private int dir = -1;
+    private double previousHeading = 0;
+    private double integratedHeading = 0;
 
 
     /*
@@ -80,9 +79,10 @@ public class blue extends OpMode {
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         arm = hardwareMap.get(DcMotor.class, "arm1");
         duckies = hardwareMap.get(DcMotor.class, "duckies");
-        imu = hardwareMap.get(BNO055IMU.class, "imu");
+        imu = hardwareMap.get(BNO055IMU.class, "gyro");
         grabber = hardwareMap.get(Servo.class, "grabber");
         wrist = hardwareMap.get(Servo.class, "wrist");
         frontLeft = hardwareMap.get(DcMotor.class, "front_left");
@@ -91,8 +91,8 @@ public class blue extends OpMode {
         backRight = hardwareMap.get(DcMotor.class, "back_right");
 
 
-        // Most robots need the motor on one side to be reversed to drive forward
-        // Reverse the motor that runs backwards when connected directly to the battery
+        //Initialize gyro
+        imu.initialize(parameters);
 
 
         // Tell the driver that initialization is complete.
@@ -137,11 +137,13 @@ public class blue extends OpMode {
     public void loop() {
         // Setup a variable for each drive wheel to save power level for telemetry
 
-        double strafe = gamepad1.left_stick_x;
-        double forward = -gamepad1.left_stick_y;
-        double rotate = gamepad1.right_stick_x * 1.1;
+        double x = gamepad1.left_stick_x;
+        double y = -gamepad1.left_stick_y;
+        double theta = gamepad1.right_stick_x * 1.1;
+        double heading = getIntegratedHeading();
 
-
+        double x_rotated = Math.cos(heading * x) - Math.sin(heading * y);
+        double y_rotated = Math.sin(heading * x) + Math.cos(heading * y);
         //set grabber positions
         if(gamepad2.left_trigger == 1){
             grabberPos++;
@@ -154,10 +156,10 @@ public class blue extends OpMode {
         //set grabber position
         grabber.setPosition(grabberPos / 300);
 
-        double frontLeftPower = forward + strafe + rotate;
-        double backLeftPower = forward - strafe + rotate;
-        double frontRightPower = forward - strafe - rotate;
-        double backRightPower = forward + strafe - rotate;
+        double frontLeftPower = y_rotated + x_rotated + theta;
+        double backLeftPower = y_rotated - x_rotated + theta;
+        double frontRightPower = y_rotated - x_rotated - theta;
+        double backRightPower = y_rotated + x_rotated - theta;
 
         // Put powers in the range of -1 to 1 only if they aren't already
         // Not checking would cause us to always drive at full speed
@@ -219,10 +221,10 @@ public class blue extends OpMode {
         }
 
         //clamp grabberPos
-        if (grabberPos > 300) {
-            grabberPos = 300;
-        } else if (grabberPos < 0) {
-            grabberPos = 0;
+        if (grabberPos > 215) {
+            grabberPos = 215;
+        } else if (grabberPos < 30) {
+            grabberPos = 30;
         }
 
         //set position
@@ -248,6 +250,8 @@ public class blue extends OpMode {
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Wrist Position", wristPos);
+        telemetry.addData("Heading", heading);
+        telemetry.addData("Grabber Position", grabberPos);
         telemetry.update();
 
         wasA = isA;
@@ -258,6 +262,22 @@ public class blue extends OpMode {
      */
     @Override
     public void stop() {
+    }
+
+    private double getIntegratedHeading() {
+        double currentHeading = imu.getAngularOrientation(AxesReference.EXTRINSIC, AxesOrder.XYZ, AngleUnit.DEGREES).thirdAngle;
+        double deltaHeading = currentHeading - previousHeading;
+
+        if (deltaHeading < -180) {
+            deltaHeading += 360;
+        } else if (deltaHeading >= 180) {
+            deltaHeading -= 360;
+        }
+
+        integratedHeading += deltaHeading;
+        previousHeading = currentHeading;
+
+        return integratedHeading;
     }
 
 }

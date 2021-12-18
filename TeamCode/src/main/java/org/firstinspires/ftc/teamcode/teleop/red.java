@@ -29,8 +29,6 @@
 
 package org.firstinspires.ftc.teamcode.teleop;
 
-import com.arcrobotics.ftclib.drivebase.MecanumDrive;
-import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -39,15 +37,10 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
+@TeleOp(name="Red", group="The Real Deal")
 
-
-@TeleOp(name="Backup", group="Iterative Opmode")
-
-public class backup extends OpMode
+public class red extends OpMode
 {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -144,15 +137,12 @@ public class backup extends OpMode
         if (gamepad2.a) {
             grabber.setPosition(0.7);
             telemetry.addLine("position 20");
-            telemetry.update();
         } else if (gamepad2.b) {
             grabber.setPosition(0.45);
             telemetry.addLine("position 30");
-            telemetry.update();
         } else if (gamepad2.y) {
             grabber.setPosition(0.1);
             telemetry.addLine("position 50");
-            telemetry.update();
         }
 
         double frontLeftPower = forward + strafe + rotate;
@@ -185,21 +175,18 @@ public class backup extends OpMode
             frontRight.setPower(frontRightPower * 0.25);
             backRight.setPower(backRightPower * 0.25);
             telemetry.addLine("Speed one quarter");
-            telemetry.update();
         } else if (gamepad1.left_bumper) {
             frontLeft.setPower(frontLeftPower * 0.75);
             backLeft.setPower(backLeftPower * 0.75);
             frontRight.setPower(frontRightPower * 0.75);
             backRight.setPower(backRightPower * 0.75);
             telemetry.addLine("Speed 3/4");
-            telemetry.update();
         } else {
             frontLeft.setPower(frontLeftPower);
             backLeft.setPower(backLeftPower);
             frontRight.setPower(frontRightPower);
             backRight.setPower(backRightPower);
             telemetry.addLine("Speed full");
-            telemetry.update();
         }
 
         //adjust wrist position by gamepad2 right stick y
@@ -227,7 +214,7 @@ public class backup extends OpMode
 
         //set ducky motor
         if(gamepad1.x || gamepad2.x){
-            duckies.setPower(0.5);
+            duckies.setPower(-0.5);
         } else{
             duckies.setPower(0);
         }
@@ -235,6 +222,7 @@ public class backup extends OpMode
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Wrist Position", wristPos);
+        telemetry.update();
     }
 
     /*

@@ -67,7 +67,7 @@ public class Field extends OpMode {
     private int dir = -1;
     private double previousHeading = 0;
     private double integratedHeading = 0;
-
+    private BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -79,7 +79,7 @@ public class Field extends OpMode {
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+
         arm = hardwareMap.get(DcMotor.class, "arm1");
         duckies = hardwareMap.get(DcMotor.class, "duckies");
         imu = hardwareMap.get(BNO055IMU.class, "gyro");
@@ -217,6 +217,10 @@ public class Field extends OpMode {
 
         if(gamepad2.a){
             wristPos = 150;
+        }
+
+        if(gamepad1.right_trigger == 1 && gamepad1.left_trigger == 1 && gamepad1.y){
+            imu.initialize(parameters);
         }
 
         //clamp between 300 and 0

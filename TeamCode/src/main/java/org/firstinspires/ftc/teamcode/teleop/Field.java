@@ -53,7 +53,7 @@ public class Field extends OpMode {
     private Servo wrist;
     private Servo grabber;
 
-    private double wristPos = 1;
+    private float wristPos = 150;
     private float grabberPos = 0;
 
     public DcMotor frontLeft;
@@ -142,8 +142,8 @@ public class Field extends OpMode {
         double theta = gamepad1.right_stick_x * 1.1;
         double heading = getIntegratedHeading();
 
-        double x_rotated = Math.cos(heading * x) - Math.sin(heading * y);
-        double y_rotated = Math.sin(heading * x) + Math.cos(heading * y);
+        double x_rotated = x * Math.cos(heading) - y * Math.sin(heading);
+        double y_rotated = x * Math.sin(heading) + y * Math.cos(heading);
         //set grabber positions
         if(gamepad2.left_trigger == 1){
             grabberPos++;

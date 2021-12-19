@@ -29,9 +29,6 @@
 
 package org.firstinspires.ftc.teamcode.teleop;
 
-import com.arcrobotics.ftclib.drivebase.MecanumDrive;
-import com.arcrobotics.ftclib.hardware.motors.Motor;
-import com.qualcomm.ftccommon.SoundPlayer;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -40,14 +37,10 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
+@TeleOp(name = "Field Generic", group = "The Real Deal")
 
-@TeleOp(name = "B", group = "The Real Deal")
-
-public class blue extends OpMode {
+public class fieldGeneric extends OpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor arm;
@@ -56,7 +49,7 @@ public class blue extends OpMode {
     private Servo wrist;
     private Servo grabber;
 
-    private float wristPos = 150;
+    private float wristPos = 0;
     private float grabberPos = 30;
 
     public DcMotor frontLeft;
@@ -68,7 +61,9 @@ public class blue extends OpMode {
     private boolean wasA = false;
     private int i = 0;
     private int dir = -1;
-
+    private double previousHeading = 0;
+    private double integratedHeading = 0;
+    private BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -80,6 +75,7 @@ public class blue extends OpMode {
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
+
         arm = hardwareMap.get(DcMotor.class, "arm1");
         duckies = hardwareMap.get(DcMotor.class, "duckies");
         imu = hardwareMap.get(BNO055IMU.class, "gyro");
@@ -90,9 +86,10 @@ public class blue extends OpMode {
         backLeft = hardwareMap.get(DcMotor.class, "back_left");
         backRight = hardwareMap.get(DcMotor.class, "back_right");
 
+        parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
 
-        // Most robots need the motor on one side to be reversed to drive forward
-        // Reverse the motor that runs backwards when connected directly to the battery
+        //Initialize gyro
+        imu.initialize(parameters);
 
 
         // Tell the driver that initialization is complete.
@@ -137,10 +134,13 @@ public class blue extends OpMode {
     public void loop() {
         // Setup a variable for each drive wheel to save power level for telemetry
 
-        double strafe = gamepad1.left_stick_x;
-        double forward = -gamepad1.left_stick_y;
-        double rotate = gamepad1.right_stick_x * 1.1;
+        double x = gamepad1.left_stick_x;
+        double y = -gamepad1.left_stick_y;
+        double theta = gamepad1.right_stick_x * 1.1;
+        double heading = -imu.getAngularOrientation().firstAngle;
 
+        double x_rotated = x * Math.cos(heading) - y * Math.sin(heading);
+        double y_rotated = x * Math.sin(heading) + y * Math.cos(heading);
 
         //set grabber positions
         if(gamepad2.left_trigger == 1){
@@ -154,10 +154,10 @@ public class blue extends OpMode {
         //set grabber position
         grabber.setPosition(grabberPos / 300);
 
-        double frontLeftPower = forward + strafe + rotate;
-        double backLeftPower = forward - strafe + rotate;
-        double frontRightPower = forward - strafe - rotate;
-        double backRightPower = forward + strafe - rotate;
+        double frontLeftPower = y_rotated + x_rotated + theta;
+        double backLeftPower = y_rotated - x_rotated + theta;
+        double frontRightPower = y_rotated - x_rotated - theta;
+        double backRightPower = y_rotated + x_rotated - theta;
 
         // Put powers in the range of -1 to 1 only if they aren't already
         // Not checking would cause us to always drive at full speed
@@ -182,11 +182,6 @@ public class blue extends OpMode {
             i++;
         }
 
-        if (i % 2 == 0) {
-            dir = -1;
-        } else {
-            dir = 1;
-        }
 
         if (gamepad1.right_bumper) {
             frontLeft.setPower(frontLeftPower * 0.25 * dir);
@@ -211,6 +206,14 @@ public class blue extends OpMode {
         //adjust wrist position by gamepad2 right stick y
         wristPos = wristPos - gamepad2.right_stick_y;
 
+        if(gamepad2.a){
+            wristPos = 150;
+        }
+
+        if(gamepad1.right_trigger == 1 && gamepad1.left_trigger == 1 && gamepad1.y){
+            imu.initialize(parameters);
+        }
+
         //clamp between 300 and 0
         if (wristPos > 300) {
             wristPos = 300;
@@ -232,7 +235,7 @@ public class blue extends OpMode {
         if (gamepad2.left_bumper) {
             arm.setPower(-0.1);
         } else if (gamepad2.right_bumper) {
-            arm.setPower(0.1);
+            arm.setPower(-0.1);
         } else {
             arm.setPower(gamepad2.left_stick_y * 0.7);
         }
@@ -245,9 +248,17 @@ public class blue extends OpMode {
             duckies.setPower(0);
         }
 
+        if(gamepad1.b || gamepad2.b){
+            duckies.setPower(-0.5);
+        } else {
+            duckies.setPower(0);
+        }
+
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Wrist Position", wristPos);
+        telemetry.addData("Heading", heading);
+        telemetry.addData("Grabber Position", grabberPos);
         telemetry.update();
 
         wasA = isA;
@@ -259,5 +270,7 @@ public class blue extends OpMode {
     @Override
     public void stop() {
     }
+
+
 
 }

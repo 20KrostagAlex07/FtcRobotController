@@ -59,9 +59,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Autonomous", group="Autonomous")
+@Autonomous(name="Red", group="Autonomous", preselectTeleOp = "Field Generic")
 
-public class auto extends LinearOpMode {
+public class autoRed extends LinearOpMode {
 
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -137,17 +137,27 @@ public class auto extends LinearOpMode {
 
       wrist.setPosition(0);
       arm.setPower(-0.7);
-      sleep(1000);
-      arm.setPower(-0.1);
+      sleep(2000);
+
+      arm.setPower(0);
+      frontLeft.setPower(0.5);
+      frontRight.setPower(-0.5);
+      backLeft.setPower(-0.5);
+      backRight.setPower(0.5);
+      sleep(800);
+
+      frontLeft.setPower(-1);
+      frontRight.setPower(-1);
+      backLeft.setPower(-1);
+      backRight.setPower(-1);
+      sleep(2000);
+
       frontLeft.setPower(-0.5);
       frontRight.setPower(0.5);
       backLeft.setPower(0.5);
       backRight.setPower(-0.5);
-      //frontLeft.setPower(1);
-      //frontRight.setPower(1);
-      //backLeft.setPower(1);
-      //backRight.setPower(1);
       sleep(1000);
+
       frontLeft.setPower(0);
       frontRight.setPower(0);
       backRight.setPower(0);

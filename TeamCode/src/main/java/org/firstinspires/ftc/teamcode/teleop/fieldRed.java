@@ -42,9 +42,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
 
-@TeleOp(name = "Field", group = "The Real Deal")
+@TeleOp(name = "Field Red", group = "The Real Deal")
 
-public class Field extends OpMode {
+public class fieldRed extends OpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor arm;
@@ -53,7 +53,7 @@ public class Field extends OpMode {
     private Servo wrist;
     private Servo grabber;
 
-    private float wristPos = 150;
+    private float wristPos = 0;
     private float grabberPos = 30;
 
     public DcMotor frontLeft;
@@ -141,7 +141,7 @@ public class Field extends OpMode {
         double x = gamepad1.left_stick_x;
         double y = -gamepad1.left_stick_y;
         double theta = gamepad1.right_stick_x * 1.1;
-        double heading = -imu.getAngularOrientation().firstAngle;
+        double heading = -imu.getAngularOrientation().firstAngle - 90;
 
         double x_rotated = x * Math.cos(heading) - y * Math.sin(heading);
         double y_rotated = x * Math.sin(heading) + y * Math.cos(heading);

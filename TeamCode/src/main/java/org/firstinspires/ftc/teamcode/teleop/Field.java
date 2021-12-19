@@ -186,11 +186,6 @@ public class Field extends OpMode {
             i++;
         }
 
-        if (i % 2 == 0) {
-            dir = -1;
-        } else {
-            dir = 1;
-        }
 
         if (gamepad1.right_bumper) {
             frontLeft.setPower(frontLeftPower * 0.25 * dir);
@@ -244,7 +239,7 @@ public class Field extends OpMode {
         if (gamepad2.left_bumper) {
             arm.setPower(-0.1);
         } else if (gamepad2.right_bumper) {
-            arm.setPower(0.1);
+            arm.setPower(-0.1);
         } else {
             arm.setPower(gamepad2.left_stick_y * 0.7);
         }
@@ -253,6 +248,12 @@ public class Field extends OpMode {
         //set ducky motor
         if (gamepad1.x || gamepad2.x) {
             duckies.setPower(0.5);
+        } else {
+            duckies.setPower(0);
+        }
+
+        if(gamepad1.b || gamepad2.b){
+            duckies.setPower(-0.5);
         } else {
             duckies.setPower(0);
         }

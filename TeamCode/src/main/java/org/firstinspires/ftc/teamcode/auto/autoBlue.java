@@ -58,7 +58,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Blue", group="Autonomous", preselectTeleOp = "Field Generic")
+@Autonomous(name="Blue", group="Autonomous", preselectTeleOp = "Field Blue")
 
 public class autoBlue extends LinearOpMode {
 

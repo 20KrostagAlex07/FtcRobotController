@@ -59,7 +59,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Red", group="Autonomous", preselectTeleOp = "Field Generic")
+@Autonomous(name="Red", group="Autonomous", preselectTeleOp = "Field Red")
 
 public class autoRed extends LinearOpMode {
 
@@ -126,7 +126,7 @@ public class autoRed extends LinearOpMode {
 
         grabber.setPosition(0.7);
         sleep(2000);
-        grabber.setPosition(0.2);
+        grabber.setPosition(0.1);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -144,12 +144,12 @@ public class autoRed extends LinearOpMode {
       frontRight.setPower(-0.5);
       backLeft.setPower(-0.5);
       backRight.setPower(0.5);
-      sleep(800);
+      sleep(500);
 
-      frontLeft.setPower(-1);
-      frontRight.setPower(-1);
-      backLeft.setPower(-1);
-      backRight.setPower(-1);
+      frontLeft.setPower(-0.8);
+      frontRight.setPower(-0.8);
+      backLeft.setPower(-0.8);
+      backRight.setPower(-0.8);
       sleep(2000);
 
       frontLeft.setPower(-0.5);

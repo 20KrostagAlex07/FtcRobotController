@@ -137,7 +137,7 @@ public class fieldBlue extends OpMode {
         double x = gamepad1.left_stick_x;
         double y = -gamepad1.left_stick_y;
         double theta = gamepad1.right_stick_x * 1.1;
-        double heading = -imu.getAngularOrientation().firstAngle + 90;
+        double heading = -imu.getAngularOrientation().firstAngle;
 
         double x_rotated = x * Math.cos(heading) - y * Math.sin(heading);
         double y_rotated = x * Math.sin(heading) + y * Math.cos(heading);
@@ -152,7 +152,7 @@ public class fieldBlue extends OpMode {
         //this is a test
 
         //set grabber position
-        grabber.setPosition(grabberPos / 300);
+        grabber.setPosition(grabberPos / 200);
 
         double frontLeftPower = y_rotated + x_rotated + theta;
         double backLeftPower = y_rotated - x_rotated + theta;
@@ -222,8 +222,8 @@ public class fieldBlue extends OpMode {
         }
 
         //clamp grabberPos
-        if (grabberPos > 215) {
-            grabberPos = 215;
+        if (grabberPos > 150) {
+            grabberPos = 150;
         } else if (grabberPos < 30) {
             grabberPos = 30;
         }
@@ -243,7 +243,7 @@ public class fieldBlue extends OpMode {
 
         //set ducky motor
         if (gamepad1.x || gamepad2.x) {
-            duckies.setPower(0.5);
+            duckies.setPower(0.7);
         } else {
             duckies.setPower(0);
         }

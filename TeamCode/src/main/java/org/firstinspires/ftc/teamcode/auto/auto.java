@@ -60,7 +60,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 @Autonomous(name="Autonomous", group="Autonomous")
-@Disabled
+
 public class auto extends LinearOpMode {
 
 
@@ -108,6 +108,7 @@ public class auto extends LinearOpMode {
         telemetry.addData("Status", "Ready to run");    //
         telemetry.update();
 
+
         //reverse stuff
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -123,6 +124,10 @@ public class auto extends LinearOpMode {
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        grabber.setPosition(0.7);
+        sleep(2000);
+        grabber.setPosition(0.2);
+
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
@@ -130,11 +135,19 @@ public class auto extends LinearOpMode {
 
         // Step 1:  Drive forward for 3 seconds
 
-      frontLeft.setPower(1);
-      frontRight.setPower(1);
-      backLeft.setPower(1);
-      backRight.setPower(1);
-      sleep(3000);
+      wrist.setPosition(0);
+      arm.setPower(-0.7);
+      sleep(1000);
+      arm.setPower(-0.1);
+      frontLeft.setPower(-0.5);
+      frontRight.setPower(0.5);
+      backLeft.setPower(0.5);
+      backRight.setPower(-0.5);
+      //frontLeft.setPower(1);
+      //frontRight.setPower(1);
+      //backLeft.setPower(1);
+      //backRight.setPower(1);
+      sleep(1000);
       frontLeft.setPower(0);
       frontRight.setPower(0);
       backRight.setPower(0);

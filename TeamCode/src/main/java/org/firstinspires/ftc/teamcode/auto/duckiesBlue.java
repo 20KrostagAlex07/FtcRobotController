@@ -129,7 +129,7 @@ public class duckiesBlue extends LinearOpMode {
       wrist.setPosition(0);
 
 
-      set(0.5, 0.5, 0.5, 0.5);
+      set(100, 100, 100, 100, 0.5);
       sleep(700);
 
       brake();
@@ -137,18 +137,18 @@ public class duckiesBlue extends LinearOpMode {
       sleep(2000);
 
       arm.setPower(0);
-      set(-0.5, 0.5, 0.5, -0.5);
+      set(-100, 100, 100, 100, 0.5);
       sleep(800);
 
 
-      set(-0.5, -0.5, -0.5, -0.5);
+      set(-100, -100, -100, -100, 0.5);
       sleep(500);
 
       brake();
       duckies.setPower(-0.5);
       sleep(2000);
 
-      set(0.5, 0.5, 0.5, 0.5);
+      set(100, 100, 100, 100, 0.5);
       sleep(500);
 
       brake();

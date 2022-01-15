@@ -103,6 +103,18 @@ public class duckiesBlue extends LinearOpMode {
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        //reset encoder
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //run to position
+        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         grabber.setPosition(0.7);
         sleep(2000);
         grabber.setPosition(0.1);
@@ -143,11 +155,22 @@ public class duckiesBlue extends LinearOpMode {
 
     }
 
-    private double set(double fL, double fR, double bL, double bR){
-        frontLeft.setPower(fL);
-        frontRight.setPower(fR);
-        backLeft.setPower(bL);
-        backRight.setPower(bR);
+    private double set(int fL, int fR, int bL, int bR, double pwr){
+        frontLeft.setTargetPosition(fL);
+        frontRight.setTargetPosition(fR);
+        backLeft.setTargetPosition(bL);
+        backRight.setTargetPosition(bR);
+
+        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        frontLeft.setPower(pwr);
+        frontRight.setPower(pwr);
+        backLeft.setPower(pwr);
+        backRight.setPower(pwr);
+
         return 0;
     }
 

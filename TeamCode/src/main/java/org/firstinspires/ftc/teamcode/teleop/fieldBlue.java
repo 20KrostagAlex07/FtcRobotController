@@ -46,10 +46,8 @@ public class fieldBlue extends OpMode {
     private DcMotor arm;
     private DcMotor duckies;
     private BNO055IMU imu;
-    private Servo wrist;
     private Servo grabber;
 
-    private float wristPos = 0;
     private float grabberPos = 30;
 
     public DcMotor frontLeft;
@@ -80,7 +78,7 @@ public class fieldBlue extends OpMode {
         duckies = hardwareMap.get(DcMotor.class, "duckies");
         imu = hardwareMap.get(BNO055IMU.class, "gyro");
         grabber = hardwareMap.get(Servo.class, "grabber");
-        wrist = hardwareMap.get(Servo.class, "wrist");
+
         frontLeft = hardwareMap.get(DcMotor.class, "front_left");
         frontRight = hardwareMap.get(DcMotor.class, "front_right");
         backLeft = hardwareMap.get(DcMotor.class, "back_left");
@@ -203,23 +201,13 @@ public class fieldBlue extends OpMode {
             telemetry.addLine("Speed full");
         }
 
-        //adjust wrist position by gamepad2 right stick y
-        wristPos = wristPos - gamepad2.right_stick_y;
 
-        if(gamepad2.a){
-            wristPos = 150;
-        }
 
         if(gamepad1.right_trigger == 1 && gamepad1.left_trigger == 1 && gamepad1.y){
             imu.initialize(parameters);
         }
 
-        //clamp between 300 and 0
-        if (wristPos > 300) {
-            wristPos = 300;
-        } else if (wristPos < 0) {
-            wristPos = 0;
-        }
+
 
         //clamp grabberPos
         if (grabberPos > 150) {
@@ -228,8 +216,7 @@ public class fieldBlue extends OpMode {
             grabberPos = 30;
         }
 
-        //set position
-        wrist.setPosition(wristPos / 300);
+
 
         //set arm power
         if (gamepad2.left_bumper) {
@@ -256,7 +243,7 @@ public class fieldBlue extends OpMode {
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.addData("Wrist Position", wristPos);
+
         telemetry.addData("Heading", heading);
         telemetry.addData("Grabber Position", grabberPos);
         telemetry.update();

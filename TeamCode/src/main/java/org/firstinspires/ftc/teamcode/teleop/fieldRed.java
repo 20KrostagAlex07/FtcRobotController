@@ -50,7 +50,7 @@ public class fieldRed extends OpMode {
     private DcMotor arm;
     private DcMotor duckies;
     private BNO055IMU imu;
-    
+
     private Servo grabber;
 
 

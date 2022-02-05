@@ -38,7 +38,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="Ducks Blue", group="Autonomous", preselectTeleOp = "Field Red")
+@Autonomous(name="Warehouse Blue", group="Autonomous", preselectTeleOp = "Field Blue")
 
 public class warehouseBlue extends LinearOpMode {
 
@@ -47,10 +47,10 @@ public class warehouseBlue extends LinearOpMode {
     private DcMotor arm;
     private DcMotor duckies;
     private BNO055IMU imu;
-    private Servo wrist;
+
     private Servo grabber;
 
-    private float wristPos = 150;
+
     private float grabberPos = 30;
 
     public DcMotor frontLeft;
@@ -77,7 +77,7 @@ public class warehouseBlue extends LinearOpMode {
         duckies = hardwareMap.get(DcMotor.class, "duckies");
         imu = hardwareMap.get(BNO055IMU.class, "gyro");
         grabber = hardwareMap.get(Servo.class, "grabber");
-        wrist = hardwareMap.get(Servo.class, "wrist");
+
         frontLeft = hardwareMap.get(DcMotor.class, "front_left");
         frontRight = hardwareMap.get(DcMotor.class, "front_right");
         backLeft = hardwareMap.get(DcMotor.class, "back_left");
@@ -126,7 +126,6 @@ public class warehouseBlue extends LinearOpMode {
 
         // Step 1:  Drive forward for 3 seconds
 
-      wrist.setPosition(0);
 
 
       set(100, 100, 100, 100, 0.5);

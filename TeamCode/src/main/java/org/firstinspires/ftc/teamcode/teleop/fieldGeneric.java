@@ -227,7 +227,10 @@ public class fieldGeneric extends OpMode {
             arm.setPower(-0.1);
         } else if (gamepad2.right_bumper) {
             arm.setPower(-0.1);
-        } else {
+        } else if(true){
+            arm.setPower(gampepad2.left_stick_y * 0.4);
+        }
+        else {
             arm.setPower(gamepad2.left_stick_y * 0.7);
         }
 

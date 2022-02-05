@@ -42,7 +42,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class fieldGeneric extends OpMode {
     // Declare OpMode members.
-    private ElapsedTime runtime = new ElapsedTime();
+    private final ElapsedTime runtime = new ElapsedTime();
     private DcMotor arm;
     private DcMotor duckies;
     private BNO055IMU imu;
@@ -60,10 +60,10 @@ public class fieldGeneric extends OpMode {
     private boolean isA = false;
     private boolean wasA = false;
     private int i = 0;
-    private int dir = -1;
-    private double previousHeading = 0;
-    private double integratedHeading = 0;
-    private BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+    private final int dir = -1;
+    private final double previousHeading = 0;
+    private final double integratedHeading = 0;
+    private final BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -143,9 +143,9 @@ public class fieldGeneric extends OpMode {
         double y_rotated = x * Math.sin(heading) + y * Math.cos(heading);
 
         //set grabber positions
-        if(gamepad2.left_trigger == 1){
+        if (gamepad2.left_trigger == 1) {
             grabberPos++;
-        } else if(gamepad2.right_trigger == 1){
+        } else if (gamepad2.right_trigger == 1) {
             grabberPos--;
         }
 
@@ -204,13 +204,9 @@ public class fieldGeneric extends OpMode {
         }
 
 
-
-
-
-        if(gamepad1.right_trigger == 1 && gamepad1.left_trigger == 1 && gamepad1.y){
+        if (gamepad1.right_trigger == 1 && gamepad1.left_trigger == 1 && gamepad1.y) {
             imu.initialize(parameters);
         }
-
 
 
         //clamp grabberPos
@@ -221,16 +217,12 @@ public class fieldGeneric extends OpMode {
         }
 
 
-
         //set arm power
         if (gamepad2.left_bumper) {
-            arm.setPower(-0.1);
+            arm.setPower(gamepad2.left_stick_y * 0.4);
         } else if (gamepad2.right_bumper) {
             arm.setPower(-0.1);
-        } else if(true){
-            arm.setPower(gampepad2.left_stick_y * 0.4);
-        }
-        else {
+        } else {
             arm.setPower(gamepad2.left_stick_y * 0.7);
         }
 
@@ -242,7 +234,7 @@ public class fieldGeneric extends OpMode {
             duckies.setPower(0);
         }
 
-        if(gamepad1.b || gamepad2.b){
+        if (gamepad1.b || gamepad2.b) {
             duckies.setPower(-0.5);
         } else {
             duckies.setPower(0);
@@ -264,7 +256,6 @@ public class fieldGeneric extends OpMode {
     @Override
     public void stop() {
     }
-
 
 
 }

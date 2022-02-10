@@ -42,7 +42,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
 
-@TeleOp(name = "Field Red", group = "The Real Deal")
+@TeleOp(name = "Field Red (Not In Use)", group = "The Real Deal")
 
 public class fieldRed extends OpMode {
     // Declare OpMode members.
@@ -53,8 +53,7 @@ public class fieldRed extends OpMode {
 
     private Servo grabber;
 
-
-    private float grabberPos = 20;
+    private float grabberPos = 160;
 
     public DcMotor frontLeft;
     public DcMotor frontRight;
@@ -95,12 +94,14 @@ public class fieldRed extends OpMode {
         //Initialize gyro
         imu.initialize(parameters);
 
+        //initiation grabber position
+        grabber.setPosition(grabberPos / 200);
+
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
 
-        //initiation grabber position
-        grabber.setPosition(grabberPos / 200);
+
     }
 
     /*
@@ -228,7 +229,7 @@ public class fieldRed extends OpMode {
         if (gamepad2.left_bumper) {
             arm.setPower(-0.1);
         } else if (gamepad2.right_bumper) {
-            arm.setPower(-0.1);
+            arm.setPower(gamepad2.left_stick_y + 0.35);
         } else {
             arm.setPower(gamepad2.left_stick_y * 0.7);
         }

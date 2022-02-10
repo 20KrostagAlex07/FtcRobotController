@@ -38,7 +38,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@TeleOp(name = "Field Blue", group = "The Real Deal")
+@TeleOp(name = "Field Blue (Not In Use)", group = "The Real Deal")
 
 public class fieldBlue extends OpMode {
     // Declare OpMode members.
@@ -48,7 +48,7 @@ public class fieldBlue extends OpMode {
     private BNO055IMU imu;
     private Servo grabber;
 
-    private float grabberPos = 30;
+    private float grabberPos = 160;
 
     public DcMotor frontLeft;
     public DcMotor frontRight;
@@ -88,6 +88,9 @@ public class fieldBlue extends OpMode {
 
         //Initialize gyro
         imu.initialize(parameters);
+
+        //initiation grabber position
+        grabber.setPosition(grabberPos / 200);
 
 
         // Tell the driver that initialization is complete.
@@ -210,10 +213,10 @@ public class fieldBlue extends OpMode {
 
 
         //clamp grabberPos
-        if (grabberPos > 150) {
-            grabberPos = 150;
-        } else if (grabberPos < 30) {
-            grabberPos = 30;
+        if (grabberPos > 160) {
+            grabberPos = 160;
+        } else if (grabberPos < 20) {
+            grabberPos = 20;
         }
 
 
@@ -222,7 +225,7 @@ public class fieldBlue extends OpMode {
         if (gamepad2.left_bumper) {
             arm.setPower(-0.1);
         } else if (gamepad2.right_bumper) {
-            arm.setPower(-0.1);
+            arm.setPower(gamepad2.left_stick_y + 0.35);
         } else {
             arm.setPower(gamepad2.left_stick_y * 0.7);
         }
@@ -240,6 +243,9 @@ public class fieldBlue extends OpMode {
         } else {
             duckies.setPower(0);
         }
+
+        //update grabber position
+        grabber.setPosition(grabberPos / 200);
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());

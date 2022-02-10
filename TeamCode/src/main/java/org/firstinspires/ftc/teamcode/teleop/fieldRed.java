@@ -54,7 +54,7 @@ public class fieldRed extends OpMode {
     private Servo grabber;
 
 
-    private float grabberPos = 30;
+    private float grabberPos = 20;
 
     public DcMotor frontLeft;
     public DcMotor frontRight;
@@ -98,6 +98,9 @@ public class fieldRed extends OpMode {
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
+
+        //initiation grabber position
+        grabber.setPosition(grabberPos / 200);
     }
 
     /*
@@ -146,7 +149,7 @@ public class fieldRed extends OpMode {
         double x_rotated = x * Math.cos(heading) - y * Math.sin(heading);
         double y_rotated = x * Math.sin(heading) + y * Math.cos(heading);
 
-        //set grabber positions
+        //triggers grabber positions
         if(gamepad2.left_trigger == 1){
             grabberPos++;
         } else if(gamepad2.right_trigger == 1){
@@ -154,9 +157,6 @@ public class fieldRed extends OpMode {
         }
 
         //this is a test
-
-        //set grabber position
-        grabber.setPosition(grabberPos / 200);
 
         double frontLeftPower = y_rotated + x_rotated + theta;
         double backLeftPower = y_rotated - x_rotated + theta;
@@ -216,10 +216,10 @@ public class fieldRed extends OpMode {
 
 
         //clamp grabberPos
-        if (grabberPos > 150) {
-            grabberPos = 150;
-        } else if (grabberPos < 30) {
-            grabberPos = 30;
+        if (grabberPos > 160) {
+            grabberPos = 160;
+        } else if (grabberPos < 20) {
+            grabberPos = 20;
         }
 
 
@@ -246,6 +246,9 @@ public class fieldRed extends OpMode {
         } else {
             duckies.setPower(0);
         }
+
+        //update grabber position
+        grabber.setPosition(grabberPos / 200);
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());

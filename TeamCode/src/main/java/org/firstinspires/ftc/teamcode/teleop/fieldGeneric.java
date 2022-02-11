@@ -66,6 +66,7 @@ public class fieldGeneric extends OpMode {
         imu.initialize(parameters);
 
         //initiation grabber position
+        grabberPos = 160;
         grabber.setPosition(grabberPos / 200);
 
 

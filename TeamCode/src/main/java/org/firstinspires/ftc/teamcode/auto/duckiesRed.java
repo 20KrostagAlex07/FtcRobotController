@@ -100,10 +100,7 @@ public class duckiesRed extends LinearOpMode {
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //reset encoder
-        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        reset();
 
         //run to position
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -126,41 +123,41 @@ public class duckiesRed extends LinearOpMode {
         set(-10, 10, -10, 10, 0.5);
         sleep(200);
 
-        brake();
+        //brake();
         sleep(10000);
 
         // Move Right to Wall
-        set(50, 50, -50, -50, 0.5);
+        //set(50, 50, -50, -50, 0.5);
         sleep(500);
 
-        brake();
+        //brake();
         sleep(10000);
 
         // Move Forward
-        set(20, -20, 20, -20, 0.5);
+        //set(20, -20, 20, -20, 0.5);
         sleep(450);
 
-        brake();
+       // brake();
         sleep(10000);
 
         // Spin the Wheel
-        duckies.setPower(-0.6);
+        //duckies.setPower(-0.6);
         sleep(4000);
 
         duckies.setPower(0);
 
         // Move left for a little bit
-        set(-25, -25, 25, 25, 0.5);
+        //set(-25, -25, 25, 25, 0.5);
         sleep(500);
 
-        brake();
+      //  brake();
         sleep(10000);
 
         // Move back into Shipping Area
-        set(-50, 50, -50, 50, 0.5);
+        //set(-50, 50, -50, 50, 0.5);
         sleep(500);
 
-        brake();
+        //brake();
         sleep(10000);
 
     }
@@ -182,6 +179,13 @@ public class duckiesRed extends LinearOpMode {
         backRight.setPower(pwr);
 
         return 0;
+    }
+
+    private void reset(){
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     private void brake() {

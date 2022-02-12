@@ -140,7 +140,7 @@ public class fieldGeneric extends OpMode {
         //clamp grabberPos
         if (grabberPos > 160) {
             grabberPos = 160;
-        } else if (grabberPos < 20) {
+        } else if (grabberPos < 50) {
             grabberPos = 20;
         }
 

@@ -110,7 +110,7 @@ public class duckiesRed extends LinearOpMode {
 
         grabber.setPosition(0.8);
         sleep(2000);
-        grabber.setPosition(0.1);
+        grabber.setPosition(0.25);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();

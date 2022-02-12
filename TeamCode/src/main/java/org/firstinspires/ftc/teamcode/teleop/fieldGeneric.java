@@ -146,8 +146,7 @@ public class fieldGeneric extends OpMode {
 
         //add emergency grabber opening
         if(gamepad2.dpad_down){
-            grabber.setPosition(0.9);
-            wait(2500);
+            grabber.setPosition(1);
             grabberPos = 160;
             grabber.setPosition(grabberPos / 200);
 

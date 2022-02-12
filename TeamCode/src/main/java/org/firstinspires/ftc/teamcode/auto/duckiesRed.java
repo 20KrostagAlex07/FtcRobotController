@@ -120,7 +120,7 @@ public class duckiesRed extends LinearOpMode {
         // Step 1:  Drive forward for 3 seconds
 
         // Move Back
-        set(-10, 10, -10, 10, 0.5);
+        set(-1, 1, -1, 1, 0.5);
         sleep(200);
 
         //brake();

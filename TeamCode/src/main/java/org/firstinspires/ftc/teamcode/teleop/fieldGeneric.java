@@ -144,6 +144,16 @@ public class fieldGeneric extends OpMode {
             grabberPos = 20;
         }
 
+        //add emergency grabber opening
+        if(gamepad2.dpad_down){
+            grabber.setPosition(0.9);
+            wait(2500);
+            grabberPos = 160;
+            grabber.setPosition(grabberPos / 200);
+
+        }
+
+
         //this is a test
 
         double frontLeftPower = y_rotated + x_rotated + theta;
@@ -218,7 +228,7 @@ public class fieldGeneric extends OpMode {
 
         //set ducky motor
         if (gamepad1.x || gamepad2.x) {
-            duckies.setPower(0.7);
+            duckies.setPower(0.5);
         } else {
             duckies.setPower(0);
         }

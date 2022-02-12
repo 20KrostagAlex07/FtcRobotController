@@ -206,7 +206,7 @@ public class fieldGeneric extends OpMode {
 
 
 
-        if(gamepad1.right_trigger == 1 && gamepad1.left_trigger){
+        if(gamepad1.right_trigger == 1 && gamepad1.left_trigger == 1){
             imu.initialize(parameters);
         }
 

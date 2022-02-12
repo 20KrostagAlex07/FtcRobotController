@@ -120,7 +120,7 @@ public class duckiesRed extends LinearOpMode {
         // Step 1:  Drive forward for 3 seconds
 
         // Move Back
-        drive(0.3, 0.3, 0.3, 0.3, 200);
+        drive(0.3, 0.3, 0.3, 0.3, 300);
 
 
 
@@ -136,13 +136,17 @@ public class duckiesRed extends LinearOpMode {
 
 
         // Spin the Wheel
-        duckies.setPower(-0.6);
+        duckies.setPower(-0.3);
         sleep(6000);
 
         duckies.setPower(0);
 
         // Move left for a little bit
-        drive(0.3, 0.3, 0.3, 0.3, 300);
+        drive(0.3, 0.3, 0.3, 0.3, 530);
+
+        brake();
+
+        sleep(200);
 
 
 

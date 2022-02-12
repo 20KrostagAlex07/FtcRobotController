@@ -38,33 +38,30 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name="Warehouse Blue", group="Autonomous", preselectTeleOp = "Field Blue")
+@Autonomous(name = "Warehouse Blue", group = "Autonomous", preselectTeleOp = "Field Generic")
 
 public class warehouseBlue extends LinearOpMode {
 
 
-    private ElapsedTime runtime = new ElapsedTime();
+    private final ElapsedTime runtime = new ElapsedTime();
     private DcMotor arm;
     private DcMotor duckies;
     private BNO055IMU imu;
 
     private Servo grabber;
 
-
-    private float grabberPos = 30;
-
     public DcMotor frontLeft;
     public DcMotor frontRight;
     public DcMotor backLeft;
     public DcMotor backRight;
 
-    private boolean isA = false;
-    private boolean wasA = false;
-    private int i = 0;
-    private int dir = -1;
-    private double previousHeading = 0;
-    private double integratedHeading = 0;
-    private BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+    private final boolean isA = false;
+    private final boolean wasA = false;
+    private final int i = 0;
+    private final int dir = -1;
+    private final double previousHeading = 0;
+    private final double integratedHeading = 0;
+    private final BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
     @Override
     public void runOpMode() {
@@ -77,7 +74,6 @@ public class warehouseBlue extends LinearOpMode {
         duckies = hardwareMap.get(DcMotor.class, "duckies");
         imu = hardwareMap.get(BNO055IMU.class, "gyro");
         grabber = hardwareMap.get(Servo.class, "grabber");
-
         frontLeft = hardwareMap.get(DcMotor.class, "front_left");
         frontRight = hardwareMap.get(DcMotor.class, "front_right");
         backLeft = hardwareMap.get(DcMotor.class, "back_left");
@@ -93,7 +89,7 @@ public class warehouseBlue extends LinearOpMode {
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);
         frontLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         backLeft.setDirection(DcMotorSimple.Direction.FORWARD);
-        arm.setDirection(DcMotorSimple.Direction.REVERSE);
+        arm.setDirection(DcMotorSimple.Direction.FORWARD);
 
 
         //set zeropowerbehavior
@@ -104,10 +100,7 @@ public class warehouseBlue extends LinearOpMode {
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //reset encoder
-        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        reset();
 
         //run to position
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -115,7 +108,7 @@ public class warehouseBlue extends LinearOpMode {
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        grabber.setPosition(0.7);
+        grabber.setPosition(0.8);
         sleep(2000);
         grabber.setPosition(0.1);
 
@@ -126,35 +119,20 @@ public class warehouseBlue extends LinearOpMode {
 
         // Step 1:  Drive forward for 3 seconds
 
+        // Move Back
+
+        arm.setPower(0.3);
+        sleep(1500);
+        arm.setPower(0.1);
+        drive(0.2, 0.2, 0.2, 0.2, 400);
 
 
-      set(100, 100, 100, 100, 0.5);
-      sleep(700);
-
-      brake();
-      arm.setPower(-0.7);
-      sleep(2000);
-
-      arm.setPower(0);
-      set(-100, 100, 100, 100, 0.5);
-      sleep(800);
 
 
-      set(-100, -100, -100, -100, 0.5);
-      sleep(500);
-
-      brake();
-      duckies.setPower(-0.5);
-      sleep(2000);
-
-      set(100, 100, 100, 100, 0.5);
-      sleep(500);
-
-      brake();
 
     }
 
-    private double set(int fL, int fR, int bL, int bR, double pwr){
+    private double set(int fL, int fR, int bL, int bR, double pwr) {
         frontLeft.setTargetPosition(fL);
         frontRight.setTargetPosition(fR);
         backLeft.setTargetPosition(bL);
@@ -170,10 +148,31 @@ public class warehouseBlue extends LinearOpMode {
         backLeft.setPower(pwr);
         backRight.setPower(pwr);
 
+
         return 0;
     }
 
-    private void brake(){
+    private double drive(double fL, double fR, double bL, double bR, long time) {
+        frontLeft.setPower(fL);
+        frontRight.setPower(fR);
+        backLeft.setPower(bL);
+        backRight.setPower(bR);
+
+        sleep(time);
+
+        brake();
+
+        return 0;
+    }
+
+    private void reset() {
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+    private void brake() {
         frontLeft.setPower(0);
         frontRight.setPower(0);
         backRight.setPower(0);

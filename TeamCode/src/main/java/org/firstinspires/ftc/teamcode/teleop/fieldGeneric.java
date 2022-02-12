@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
 
-@TeleOp(name = "Field Generic (Current)", group = "The Real Deal")
+@TeleOp(name = "Field Generic", group = "The Real Deal")
 
 public class fieldGeneric extends OpMode {
     // Declare OpMode members.

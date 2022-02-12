@@ -129,6 +129,21 @@ public class fieldGeneric extends OpMode {
             grabberPos--;
         }
 
+        //buttons control grabber positions
+        if(gamepad2.y) {
+            grabberPos = 160;
+        } else if(gamepad2.a) {
+            grabberPos = 20;
+        }
+
+
+        //clamp grabberPos
+        if (grabberPos > 160) {
+            grabberPos = 160;
+        } else if (grabberPos < 20) {
+            grabberPos = 20;
+        }
+
         //this is a test
 
         double frontLeftPower = y_rotated + x_rotated + theta;
@@ -188,20 +203,14 @@ public class fieldGeneric extends OpMode {
 
 
 
-        //clamp grabberPos
-        if (grabberPos > 160) {
-            grabberPos = 160;
-        } else if (grabberPos < 20) {
-            grabberPos = 20;
-        }
-
-
-
         //set arm power
-        if (gamepad2.left_bumper) {
+        //if statement is the arm's counter-force against gravity
+        //else if statement is the arm's slow mode
+        //else statement is regular arm speed
+        if (gamepad2.right_bumper) {
             arm.setPower(-0.1);
-        } else if (gamepad2.right_bumper) {
-            arm.setPower(gamepad2.left_stick_y + 0.35);
+        } else if (gamepad2.left_bumper) {
+            arm.setPower(gamepad2.left_stick_y * 0.35);
         } else {
             arm.setPower(gamepad2.left_stick_y * 0.7);
         }

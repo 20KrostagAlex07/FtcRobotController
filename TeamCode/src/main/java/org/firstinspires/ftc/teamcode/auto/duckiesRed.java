@@ -120,45 +120,33 @@ public class duckiesRed extends LinearOpMode {
         // Step 1:  Drive forward for 3 seconds
 
         // Move Back
-        set(-1, 1, -1, 1, 0.5);
-        sleep(200);
+        drive(0.3, 0.3, 0.3, 0.3, 200);
 
-        //brake();
-        sleep(10000);
 
-        // Move Right to Wall
-        //set(50, 50, -50, -50, 0.5);
-        sleep(500);
 
-        //brake();
-        sleep(10000);
 
-        // Move Forward
-        //set(20, -20, 20, -20, 0.5);
-        sleep(450);
+        drive(-0.4, 0.4, 0.4, -0.4, 1000);
 
-       // brake();
-        sleep(10000);
+
+
+
+        drive(-0.1, -0.1, -0.1, -0.1, 700);
+
+
+
 
         // Spin the Wheel
-        //duckies.setPower(-0.6);
-        sleep(4000);
+        duckies.setPower(-0.6);
+        sleep(6000);
 
         duckies.setPower(0);
 
         // Move left for a little bit
-        //set(-25, -25, 25, 25, 0.5);
-        sleep(500);
+        drive(0.3, 0.3, 0.3, 0.3, 300);
 
-      //  brake();
-        sleep(10000);
 
-        // Move back into Shipping Area
-        //set(-50, 50, -50, 50, 0.5);
-        sleep(500);
 
-        //brake();
-        sleep(10000);
+
 
     }
 
@@ -178,10 +166,12 @@ public class duckiesRed extends LinearOpMode {
         backLeft.setPower(pwr);
         backRight.setPower(pwr);
 
+
+
         return 0;
     }
 
-    private double drive(int fL, int fR, int bL, int bR, long time){
+    private double drive(double fL, double fR, double bL, double bR, long time){
         frontLeft.setPower(fL);
         frontRight.setPower(fR);
         backLeft.setPower(bL);

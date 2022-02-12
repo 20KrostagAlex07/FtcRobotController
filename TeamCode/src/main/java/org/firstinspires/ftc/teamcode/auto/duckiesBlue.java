@@ -77,7 +77,7 @@ public class duckiesBlue extends LinearOpMode {
         duckies = hardwareMap.get(DcMotor.class, "duckies");
         imu = hardwareMap.get(BNO055IMU.class, "gyro");
         grabber = hardwareMap.get(Servo.class, "grabber");
-      
+
         frontLeft = hardwareMap.get(DcMotor.class, "front_left");
         frontRight = hardwareMap.get(DcMotor.class, "front_right");
         backLeft = hardwareMap.get(DcMotor.class, "back_left");

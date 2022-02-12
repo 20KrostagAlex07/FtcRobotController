@@ -227,7 +227,7 @@ public class fieldGeneric extends OpMode {
 
         //set ducky motor
         if (gamepad1.x || gamepad2.x) {
-            duckies.setPower(0.5);
+            duckies.setPower(0.6);
         } else {
             duckies.setPower(0);
         }

@@ -181,6 +181,19 @@ public class duckiesRed extends LinearOpMode {
         return 0;
     }
 
+    private double drive(int fL, int fR, int bL, int bR, long time){
+        frontLeft.setPower(fL);
+        frontRight.setPower(fR);
+        backLeft.setPower(bL);
+        backRight.setPower(bR);
+
+        sleep(time);
+
+        brake();
+
+        return 0;
+    }
+
     private void reset(){
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

@@ -38,9 +38,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name = "Ducks Blue", group = "Autonomous", preselectTeleOp = "Field Blue")
+@Autonomous(name = "Ducks Red", group = "Autonomous", preselectTeleOp = "Field Generic")
 
-public class duckiesBlue extends LinearOpMode {
+public class duckiesRed extends LinearOpMode {
 
 
     private final ElapsedTime runtime = new ElapsedTime();
@@ -49,9 +49,6 @@ public class duckiesBlue extends LinearOpMode {
     private BNO055IMU imu;
 
     private Servo grabber;
-
-
-    private final float grabberPos = 30;
 
     public DcMotor frontLeft;
     public DcMotor frontRight;
@@ -103,10 +100,7 @@ public class duckiesBlue extends LinearOpMode {
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //reset encoder
-        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        reset();
 
         //run to position
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -114,7 +108,7 @@ public class duckiesBlue extends LinearOpMode {
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        grabber.setPosition(0.7);
+        grabber.setPosition(0.8);
         sleep(2000);
         grabber.setPosition(0.1);
 
@@ -125,26 +119,46 @@ public class duckiesBlue extends LinearOpMode {
 
         // Step 1:  Drive forward for 3 seconds
 
-
-        set(10, -10, -10, 10, 0.2);
+        // Move Back
+        set(-1, 1, -1, 1, 0.5);
         sleep(200);
 
-        set(-100, -100, -100, -100, 0.5);
-        sleep(530);
+        //brake();
+        sleep(10000);
 
-        brake();
-
-        duckies.setPower(0.5);
-        sleep(3000);
-
-        duckies.setPower(0);
-        set(100, -100, -100, 100, 0.5);
+        // Move Right to Wall
+        //set(50, 50, -50, -50, 0.5);
         sleep(500);
 
-        set(-50, -50, -50, -50, 0.5);
-        sleep(300);
+        //brake();
+        sleep(10000);
 
-        brake();
+        // Move Forward
+        //set(20, -20, 20, -20, 0.5);
+        sleep(450);
+
+       // brake();
+        sleep(10000);
+
+        // Spin the Wheel
+        //duckies.setPower(-0.6);
+        sleep(4000);
+
+        duckies.setPower(0);
+
+        // Move left for a little bit
+        //set(-25, -25, 25, 25, 0.5);
+        sleep(500);
+
+      //  brake();
+        sleep(10000);
+
+        // Move back into Shipping Area
+        //set(-50, 50, -50, 50, 0.5);
+        sleep(500);
+
+        //brake();
+        sleep(10000);
 
     }
 
@@ -165,6 +179,13 @@ public class duckiesBlue extends LinearOpMode {
         backRight.setPower(pwr);
 
         return 0;
+    }
+
+    private void reset(){
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     private void brake() {

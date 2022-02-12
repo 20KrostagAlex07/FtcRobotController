@@ -1,32 +1,3 @@
-/* Copyright (c) 2017 FIRST. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided that
- * the following conditions are met:
- *
- * Redistributions of source code must retain the above copyright notice, this list
- * of conditions and the following disclaimer.
- *
- * Redistributions in binary form must reproduce the above copyright notice, this
- * list of conditions and the following disclaimer in the documentation and/or
- * other materials provided with the distribution.
- *
- * Neither the name of FIRST nor the names of its contributors may be used to endorse or
- * promote products derived frontRightom this software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS
- * LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIAbackLeftE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
 package org.firstinspires.ftc.teamcode.teleop;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
@@ -37,8 +8,12 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
-@TeleOp(name = "Field Generic", group = "The Real Deal")
+
+@TeleOp(name = "Field Generic (Current)", group = "The Real Deal")
 
 public class fieldGeneric extends OpMode {
     // Declare OpMode members.
@@ -49,8 +24,7 @@ public class fieldGeneric extends OpMode {
 
     private Servo grabber;
 
-
-    private float grabberPos = 30;
+    private float grabberPos = 160;
 
     public DcMotor frontLeft;
     public DcMotor frontRight;
@@ -91,9 +65,15 @@ public class fieldGeneric extends OpMode {
         //Initialize gyro
         imu.initialize(parameters);
 
+        //initiation grabber position
+        grabberPos = 160;
+        grabber.setPosition(grabberPos / 200);
+
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
+
+
     }
 
     /*
@@ -142,17 +122,38 @@ public class fieldGeneric extends OpMode {
         double x_rotated = x * Math.cos(heading) - y * Math.sin(heading);
         double y_rotated = x * Math.sin(heading) + y * Math.cos(heading);
 
-        //set grabber positions
+        //triggers grabber positions
         if(gamepad2.left_trigger == 1){
             grabberPos++;
         } else if(gamepad2.right_trigger == 1){
             grabberPos--;
         }
 
-        //this is a test
+        //buttons control grabber positions
+        if(gamepad2.y) {
+            grabberPos = 160;
+        } else if(gamepad2.a) {
+            grabberPos = 20;
+        }
 
-        //set grabber position
-        grabber.setPosition(grabberPos / 200);
+
+        //clamp grabberPos
+        if (grabberPos > 160) {
+            grabberPos = 160;
+        } else if (grabberPos < 20) {
+            grabberPos = 20;
+        }
+
+        //add emergency grabber opening
+        if(gamepad2.dpad_down){
+            grabber.setPosition(1);
+            grabberPos = 160;
+            grabber.setPosition(grabberPos / 200);
+
+        }
+
+
+        //this is a test
 
         double frontLeftPower = y_rotated + x_rotated + theta;
         double backLeftPower = y_rotated - x_rotated + theta;
@@ -205,28 +206,20 @@ public class fieldGeneric extends OpMode {
 
 
 
-
-
         if(gamepad1.right_trigger == 1 && gamepad1.left_trigger == 1 && gamepad1.y){
             imu.initialize(parameters);
         }
 
 
 
-        //clamp grabberPos
-        if (grabberPos > 150) {
-            grabberPos = 150;
-        } else if (grabberPos < 30) {
-            grabberPos = 30;
-        }
-
-
-
         //set arm power
-        if (gamepad2.left_bumper) {
+        //if statement is the arm's counter-force against gravity
+        //else if statement is the arm's slow mode
+        //else statement is regular arm speed
+        if (gamepad2.right_bumper) {
             arm.setPower(-0.1);
-        } else if (gamepad2.right_bumper) {
-            arm.setPower(-0.1);
+        } else if (gamepad2.left_bumper) {
+            arm.setPower(gamepad2.left_stick_y * 0.35);
         } else {
             arm.setPower(gamepad2.left_stick_y * 0.7);
         }
@@ -234,7 +227,7 @@ public class fieldGeneric extends OpMode {
 
         //set ducky motor
         if (gamepad1.x || gamepad2.x) {
-            duckies.setPower(0.7);
+            duckies.setPower(0.5);
         } else {
             duckies.setPower(0);
         }
@@ -244,6 +237,9 @@ public class fieldGeneric extends OpMode {
         } else {
             duckies.setPower(0);
         }
+
+        //update grabber position
+        grabber.setPosition(grabberPos / 200);
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());

@@ -38,12 +38,12 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@Autonomous(name = "Ducks Blue", group = "Autonomous", preselectTeleOp = "Field Blue")
+@Autonomous(name="Warehouse Blue", group="Autonomous", preselectTeleOp = "Field Blue")
 
-public class duckiesBlue extends LinearOpMode {
+public class warehouseBlue extends LinearOpMode {
 
 
-    private final ElapsedTime runtime = new ElapsedTime();
+    private ElapsedTime runtime = new ElapsedTime();
     private DcMotor arm;
     private DcMotor duckies;
     private BNO055IMU imu;
@@ -51,20 +51,20 @@ public class duckiesBlue extends LinearOpMode {
     private Servo grabber;
 
 
-    private final float grabberPos = 30;
+    private float grabberPos = 30;
 
     public DcMotor frontLeft;
     public DcMotor frontRight;
     public DcMotor backLeft;
     public DcMotor backRight;
 
-    private final boolean isA = false;
-    private final boolean wasA = false;
-    private final int i = 0;
-    private final int dir = -1;
-    private final double previousHeading = 0;
-    private final double integratedHeading = 0;
-    private final BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+    private boolean isA = false;
+    private boolean wasA = false;
+    private int i = 0;
+    private int dir = -1;
+    private double previousHeading = 0;
+    private double integratedHeading = 0;
+    private BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 
     @Override
     public void runOpMode() {
@@ -77,6 +77,7 @@ public class duckiesBlue extends LinearOpMode {
         duckies = hardwareMap.get(DcMotor.class, "duckies");
         imu = hardwareMap.get(BNO055IMU.class, "gyro");
         grabber = hardwareMap.get(Servo.class, "grabber");
+
         frontLeft = hardwareMap.get(DcMotor.class, "front_left");
         frontRight = hardwareMap.get(DcMotor.class, "front_right");
         backLeft = hardwareMap.get(DcMotor.class, "back_left");
@@ -126,29 +127,34 @@ public class duckiesBlue extends LinearOpMode {
         // Step 1:  Drive forward for 3 seconds
 
 
-        set(10, -10, -10, 10, 0.2);
-        sleep(200);
 
-        set(-100, -100, -100, -100, 0.5);
-        sleep(530);
+      set(100, 100, 100, 100, 0.5);
+      sleep(700);
 
-        brake();
+      brake();
+      arm.setPower(-0.7);
+      sleep(2000);
 
-        duckies.setPower(0.5);
-        sleep(3000);
+      arm.setPower(0);
+      set(-100, 100, 100, 100, 0.5);
+      sleep(800);
 
-        duckies.setPower(0);
-        set(100, -100, -100, 100, 0.5);
-        sleep(500);
 
-        set(-50, -50, -50, -50, 0.5);
-        sleep(300);
+      set(-100, -100, -100, -100, 0.5);
+      sleep(500);
 
-        brake();
+      brake();
+      duckies.setPower(-0.5);
+      sleep(2000);
+
+      set(100, 100, 100, 100, 0.5);
+      sleep(500);
+
+      brake();
 
     }
 
-    private double set(int fL, int fR, int bL, int bR, double pwr) {
+    private double set(int fL, int fR, int bL, int bR, double pwr){
         frontLeft.setTargetPosition(fL);
         frontRight.setTargetPosition(fR);
         backLeft.setTargetPosition(bL);
@@ -167,7 +173,7 @@ public class duckiesBlue extends LinearOpMode {
         return 0;
     }
 
-    private void brake() {
+    private void brake(){
         frontLeft.setPower(0);
         frontRight.setPower(0);
         backRight.setPower(0);

@@ -124,9 +124,9 @@ public class fieldGeneric extends OpMode {
 
         //triggers grabber positions
         if(gamepad2.left_trigger == 1){
-            grabberPos = grabberPos + 2;
+            grabberPos = grabberPos + 4;
         } else if(gamepad2.right_trigger == 1){
-            grabberPos = grabberPos - 2;
+            grabberPos = grabberPos - 4;
         }
 
         //buttons control grabber positions
@@ -227,7 +227,7 @@ public class fieldGeneric extends OpMode {
 
         //set ducky motor
         if (gamepad1.x || gamepad2.x) {
-            duckies.setPower(0.7);
+            duckies.setPower(0.5);
         } else {
             duckies.setPower(0);
         }

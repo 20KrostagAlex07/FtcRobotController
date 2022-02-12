@@ -66,7 +66,7 @@ public class fieldGeneric extends OpMode {
         imu.initialize(parameters);
 
         //initiation grabber position
-        grabberPos = 160;
+        grabberPos = 50;
         grabber.setPosition(grabberPos / 200);
 
 
@@ -123,7 +123,7 @@ public class fieldGeneric extends OpMode {
         double y_rotated = x * Math.sin(heading) + y * Math.cos(heading);
 
         //triggers grabber positions
-        if(gamepad2.left_trigger == 2){
+        if(gamepad2.left_trigger == 1){
             grabberPos = grabberPos + 2;
         } else if(gamepad2.right_trigger == 1){
             grabberPos = grabberPos - 2;
@@ -141,7 +141,7 @@ public class fieldGeneric extends OpMode {
         if (grabberPos > 160) {
             grabberPos = 160;
         } else if (grabberPos < 50) {
-            grabberPos = 20;
+            grabberPos = 50;
         }
 
         //add emergency grabber opening

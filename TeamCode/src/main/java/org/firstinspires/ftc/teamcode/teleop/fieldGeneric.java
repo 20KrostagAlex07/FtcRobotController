@@ -123,10 +123,10 @@ public class fieldGeneric extends OpMode {
         double y_rotated = x * Math.sin(heading) + y * Math.cos(heading);
 
         //triggers grabber positions
-        if(gamepad2.left_trigger == 1){
-            grabberPos++;
+        if(gamepad2.left_trigger == 2){
+            grabberPos = grabberPos + 2;
         } else if(gamepad2.right_trigger == 1){
-            grabberPos--;
+            grabberPos = grabberPos - 2;
         }
 
         //buttons control grabber positions
@@ -206,7 +206,7 @@ public class fieldGeneric extends OpMode {
 
 
 
-        if(gamepad1.right_trigger == 1 && gamepad1.left_trigger == 1 && gamepad1.y){
+        if(gamepad1.right_trigger == 1 && gamepad1.left_trigger){
             imu.initialize(parameters);
         }
 

@@ -124,7 +124,7 @@ public class warehouseBlue extends LinearOpMode {
         arm.setPower(0.3);
         sleep(1500);
         arm.setPower(0.1);
-        drive(0.2, -0.2, -0.2, 0.2, 400);
+        drive(-0.2, 0.2, 0.2, -0.2, 400);
         sleep(400);
 
         drive(0.7, 0.7, 0.7, 0.7, 1000);

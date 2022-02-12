@@ -227,13 +227,13 @@ public class fieldGeneric extends OpMode {
 
         //set ducky motor
         if (gamepad1.x || gamepad2.x) {
-            duckies.setPower(0.5);
+            duckies.setPower(0.7);
         } else {
             duckies.setPower(0);
         }
 
         if(gamepad1.b || gamepad2.b){
-            duckies.setPower(-0.5);
+            duckies.setPower(-0.7);
         } else {
             duckies.setPower(0);
         }
@@ -256,6 +256,7 @@ public class fieldGeneric extends OpMode {
      */
     @Override
     public void stop() {
+        grabber.setPosition(160/200);
     }
 
 

@@ -85,7 +85,7 @@ public class objectDetection extends LinearOpMode {
      * and paste it in to your code on the next line, between the double quotes.
      */
     private static final String VUFORIA_KEY =
-            " -- YOUR NEW VUFORIA KEY GOES HERE  --- ";
+            "AV9qcDb/////AAABmZBCG55+JknShQQBxa0mBhxUUy/gX+DqiwuXJ9FF4tiCn8JXW7US6ko/Dr66vkdc5mOJotifXVKO6JewaiSQnBXv9NolQhr86Ky3sKD+vSXy03fETHrI8H4jb4YUUG6lOyHzrUvhiTHS9tYx6+K3qsl7XIEVDwJK1Szw3LeVijGCmOLZ+II0tcOEhhB+qBdUfJFkEuxpjY/2n+BF4vD59u5JFAvpQY0siTZ8naEqpcSXSmGbfRKX4CtIt5ezpHMfpf+ct8bAzhvlq78NyAVbzllx8SCFQlTuNggbkcfjQMX6WZgz+OgsWsauJy/jtN1rXpwxikTDxx+ATK+x80EJY5oOxU4gO2WKrjwpInD2PAQu";
 
     /**
      * {@link #vuforia} is the variable we will use to store our instance of the Vuforia

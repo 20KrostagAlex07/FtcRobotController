@@ -180,7 +180,8 @@ public class fieldGeneric extends OpMode {
         }
 
 
-                //right stick grabber positions
+        //right stick grabber positions
+        //also if this works well enough we could dedicate trigers to duckies and buttons to specific grabber positions
         double grabberPosStick = gamepad2.right_stick_x;
         if(gamepad2.right_stick_x){
             grabberPos = grabberPos + gamepad2.right_stick_x;

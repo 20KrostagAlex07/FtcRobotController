@@ -30,10 +30,6 @@ public class fieldGeneric extends OpMode {
     public DcMotor frontRight;
     public DcMotor backLeft;
     public DcMotor backRight;
-
-    private boolean isA = false;
-    private boolean wasA = false;
-    private int i = 0;
     private int dir = -1;
     private double previousHeading = 0;
     private double integratedHeading = 0;
@@ -151,11 +147,6 @@ public class fieldGeneric extends OpMode {
             backRightPower /= max;
         }
 
-        //change speed of robot
-        if ((isA = gamepad1.a) && !wasA) {
-            i++;
-        }
-
 
         if (gamepad1.right_bumper) {
             frontLeft.setPower(frontLeftPower * 0.25 * dir);
@@ -179,7 +170,7 @@ public class fieldGeneric extends OpMode {
 
 
 
-        if(gamepad1.dpad_right || gamepad1.dpad_right || gamepad1.dpad_left || gamepad1.dpad_down || gamepad1.dpad_up){
+        if(gamepad1.dpad_up && gamepad1.dpad_left || gamepad1.dpad_down && gamepad1.dpad_right){
             imu.initialize(parameters);
         }
         
@@ -202,10 +193,7 @@ public class fieldGeneric extends OpMode {
 
         //right stick grabber positions
         //also if this works well enough we could dedicate trigers to duckies and buttons to specific grabber positions
-        double grabberPosStick = gamepad2.right_stick_x;
-        if(gamepad2.right_stick_x){
-            grabberPos = grabberPos + gamepad2.right_stick_x;
-        }
+        grabberPos = grabberPos + gamepad2.right_stick_x;
 
         //triggers grabber positions -commented out for now
         /*
@@ -220,35 +208,26 @@ public class fieldGeneric extends OpMode {
         //y is full open
         //a is cube
         //b is ball
-        if(gamepad2.y) {
+        /*if(gamepad2.y) {
             grabberPos = 160;
         } else if(gamepad2.a) {
             grabberPos = 20;
         }
           else if(gamepad2.b){
               grabberPos = 60;
-        }
+        }*/
 
         
-        //add emergency grabber opening
-        if(gamepad2.x){
-            grabber.setPosition(1);
-            grabberPos = 160;
-            grabber.setPosition(grabberPos / 200);
-
         //clamp grabberPos
         if (grabberPos > 160) {
             grabberPos = 160;
-        } else if (grabberPos < 20) {
-            grabberPos = 20;
+        } else if (grabberPos < 50) {
+            grabberPos = 50;
         }
 
         //add emergency grabber opening
-        if(gamepad2.x){
+        if(gamepad1.x || gamepad2.x){
             grabber.setPosition(1);
-            grabberPos = 160;
-            grabber.setPosition(grabberPos / 200);
-
         }
 
 
@@ -282,7 +261,7 @@ public class fieldGeneric extends OpMode {
         telemetry.addData("Grabber Position", grabberPos);
         telemetry.update();
 
-        wasA = isA;
+
     }
 
     /*
@@ -290,7 +269,7 @@ public class fieldGeneric extends OpMode {
      */
     @Override
     public void stop() {
-        grabber.setPosition(160/200);
+        grabber.setPosition(0.8);
     }
 
 

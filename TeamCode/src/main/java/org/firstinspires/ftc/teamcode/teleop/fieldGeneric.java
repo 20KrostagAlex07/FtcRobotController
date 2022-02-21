@@ -122,37 +122,6 @@ public class fieldGeneric extends OpMode {
         double x_rotated = x * Math.cos(heading) - y * Math.sin(heading);
         double y_rotated = x * Math.sin(heading) + y * Math.cos(heading);
 
-        //triggers grabber positions
-        if(gamepad2.left_trigger == 1){
-            grabberPos = grabberPos + 4;
-        } else if(gamepad2.right_trigger == 1){
-            grabberPos = grabberPos - 4;
-        }
-
-        //buttons control grabber positions
-        if(gamepad2.y) {
-            grabberPos = 160;
-        } else if(gamepad2.a) {
-            grabberPos = 20;
-        }
-
-
-        //clamp grabberPos
-        if (grabberPos > 160) {
-            grabberPos = 160;
-        } else if (grabberPos < 20) {
-            grabberPos = 20;
-        }
-
-        //add emergency grabber opening
-        if(gamepad2.dpad_down){
-            grabber.setPosition(1);
-            grabberPos = 160;
-            grabber.setPosition(grabberPos / 200);
-
-        }
-
-
         //this is a test
 
         double frontLeftPower = y_rotated + x_rotated + theta;
@@ -211,6 +180,41 @@ public class fieldGeneric extends OpMode {
         }
 
 
+                //right stick grabber positions
+        double grabberPosStick = gamepad2.right_stick_x;
+        if(gamepad2.right_stick_x){
+            grabberPos = grabberPos + gamepad2.right_stick_x;
+        }
+
+        //triggers grabber positions
+        if(gamepad2.left_trigger == 1){
+            grabberPos = grabberPos + 4;
+        } else if(gamepad2.right_trigger == 1){
+            grabberPos = grabberPos - 4;
+        }
+
+        //buttons control grabber positions
+        if(gamepad2.y) {
+            grabberPos = 160;
+        } else if(gamepad2.a) {
+            grabberPos = 20;
+        }
+
+
+        //clamp grabberPos
+        if (grabberPos > 160) {
+            grabberPos = 160;
+        } else if (grabberPos < 20) {
+            grabberPos = 20;
+        }
+
+        //add emergency grabber opening
+        if(gamepad2.dpad_down){
+            grabber.setPosition(1);
+            grabberPos = 160;
+            grabber.setPosition(grabberPos / 200);
+
+        }
 
         //set arm power
         //if statement is the arm's counter-force against gravity

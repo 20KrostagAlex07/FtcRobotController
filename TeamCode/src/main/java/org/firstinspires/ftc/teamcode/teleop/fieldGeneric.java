@@ -112,8 +112,12 @@ public class fieldGeneric extends OpMode {
      */
     @Override
     public void loop() {
+        
+        
+//Gamepad 1 Controls
+        
+        
         // Setup a variable for each drive wheel to save power level for telemetry
-
         double x = gamepad1.left_stick_x;
         double y = -gamepad1.left_stick_y;
         double theta = gamepad1.right_stick_x * 1.1;
@@ -178,6 +182,22 @@ public class fieldGeneric extends OpMode {
         if(gamepad1.dpad_right || gamepad1.dpad_right || gamepad1.dpad_left || gamepad1.dpad_down || gamepad1.dpad_up){
             imu.initialize(parameters);
         }
+        
+        
+//GamePad 2 Controls
+        
+        
+        //set arm power
+        //if statement is the arm's counter-force against gravity
+        //else if statement is the arm's slow mode
+        //else statement is regular arm speed
+        if (gamepad2.right_bumper) {
+            arm.setPower(-0.1);
+        } else if (gamepad2.left_bumper) {
+            arm.setPower(gamepad2.left_stick_y * 0.35);
+        } else {
+            arm.setPower(gamepad2.left_stick_y * 0.7);
+        }
 
 
         //right stick grabber positions
@@ -231,19 +251,10 @@ public class fieldGeneric extends OpMode {
 
         }
 
-        //set arm power
-        //if statement is the arm's counter-force against gravity
-        //else if statement is the arm's slow mode
-        //else statement is regular arm speed
-        if (gamepad2.right_bumper) {
-            arm.setPower(-0.1);
-        } else if (gamepad2.left_bumper) {
-            arm.setPower(gamepad2.left_stick_y * 0.35);
-        } else {
-            arm.setPower(gamepad2.left_stick_y * 0.7);
-        }
 
-
+//Duckies
+            
+            
         //set ducky motor
         if (gamepad1.right_trigger || gamepad2.right_trigger) {
             duckies.setPower(0.6);
@@ -256,6 +267,10 @@ public class fieldGeneric extends OpMode {
         } else {
             duckies.setPower(0);
         }
+            
+            
+//Other
+            
 
         //update grabber position
         grabber.setPosition(grabberPos / 200);

@@ -175,7 +175,7 @@ public class fieldGeneric extends OpMode {
 
 
 
-        if(gamepad1.right_trigger == 1 && gamepad1.left_trigger == 1){
+        if(gamepad1.dpad_right || gamepad1.dpad_right || gamepad1.dpad_left || gamepad1.dpad_down || gamepad1.dpad_up){
             imu.initialize(parameters);
         }
 
@@ -187,20 +187,34 @@ public class fieldGeneric extends OpMode {
             grabberPos = grabberPos + gamepad2.right_stick_x;
         }
 
-        //triggers grabber positions
+        //triggers grabber positions -commented out for now
+        /*
         if(gamepad2.left_trigger == 1){
             grabberPos = grabberPos + 4;
         } else if(gamepad2.right_trigger == 1){
             grabberPos = grabberPos - 4;
         }
+        */
 
         //buttons control grabber positions
+        //y is full open
+        //a is cube
+        //b is ball
         if(gamepad2.y) {
             grabberPos = 160;
         } else if(gamepad2.a) {
             grabberPos = 20;
         }
+          else if(gamepad2.b){
+              grabberPos = 60;
+        }
 
+        
+        //add emergency grabber opening
+        if(gamepad2.x){
+            grabber.setPosition(1);
+            grabberPos = 160;
+            grabber.setPosition(grabberPos / 200);
 
         //clamp grabberPos
         if (grabberPos > 160) {
@@ -210,7 +224,7 @@ public class fieldGeneric extends OpMode {
         }
 
         //add emergency grabber opening
-        if(gamepad2.dpad_down){
+        if(gamepad2.x){
             grabber.setPosition(1);
             grabberPos = 160;
             grabber.setPosition(grabberPos / 200);
@@ -231,13 +245,13 @@ public class fieldGeneric extends OpMode {
 
 
         //set ducky motor
-        if (gamepad1.x || gamepad2.x) {
+        if (gamepad1.right_trigger || gamepad2.right_trigger) {
             duckies.setPower(0.6);
         } else {
             duckies.setPower(0);
         }
 
-        if(gamepad1.b || gamepad2.b){
+        if(gamepad1.left_trigger || gamepad2.left_trigger){
             duckies.setPower(-0.7);
         } else {
             duckies.setPower(0);

@@ -13,9 +13,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
 
-@TeleOp(name = "Field Generic", group = "The Real Deal")
+@TeleOp(name = "New Arm Control", group = "The Real Deal")
 
-public class fieldGeneric extends OpMode {
+public class newArmControl extends OpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor arm;

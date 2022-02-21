@@ -66,7 +66,7 @@ public class fieldGeneric extends OpMode {
         imu.initialize(parameters);
 
         //initiation grabber position
-        grabberPos = 50;
+        grabberPos = 20;
         grabber.setPosition(grabberPos / 200);
 
 
@@ -140,8 +140,8 @@ public class fieldGeneric extends OpMode {
         //clamp grabberPos
         if (grabberPos > 160) {
             grabberPos = 160;
-        } else if (grabberPos < 50) {
-            grabberPos = 50;
+        } else if (grabberPos < 20) {
+            grabberPos = 20;
         }
 
         //add emergency grabber opening

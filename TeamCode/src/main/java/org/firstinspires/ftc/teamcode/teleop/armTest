@@ -64,6 +64,12 @@ public class armTest extends OpMode {
         arm.setDirection(DcMotorSimple.Direction.REVERSE);
 
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        
+        // disables the default velocity control
+		// this does NOT disable the encoder from counting, 
+		// but lets us simply send raw motor power.
+		arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        
     }
 
     /*

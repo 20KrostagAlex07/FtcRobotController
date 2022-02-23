@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
 
-public class PIDController {
+public class newArmControl {
 
 	/**
 	 * construct PID controller 
@@ -21,7 +21,7 @@ public class PIDController {
 	 * @param Ki Integral coefficient 
 	 * @param Kd Derivative coefficient 
 	 */
-	public PIDController(double Kp, double Ki, double Kd) {
+	public newArmControl(double Kp, double Ki, double Kd) {
 
 	}
 

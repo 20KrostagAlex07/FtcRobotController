@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
 
-public class newArmControl {
+public class armClass {
 
 	/**
 	 * construct PID controller 
@@ -21,7 +21,7 @@ public class newArmControl {
 	 * @param Ki Integral coefficient 
 	 * @param Kd Derivative coefficient 
 	 */
-	public newArmControl(double Kp, double Ki, double Kd) {
+	public armPID(double Kp, double Ki, double Kd) {
 
 	}
 
@@ -31,7 +31,7 @@ public class newArmControl {
 	 * @param state where we currently are, I.E. motor position 
 	 * @return the command to our motor, I.E. motor power 
 	 */
-	public double armPID(double target, double state) {
+	public double armControl(double target, double state) {
 		// PID logic and then return the output 
 	}
 }

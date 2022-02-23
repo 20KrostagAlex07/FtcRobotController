@@ -31,7 +31,7 @@ public class newArmControl {
 	 * @param state where we currently are, I.E. motor position 
 	 * @return the command to our motor, I.E. motor power 
 	 */
-	public double update(double target, double state) {
+	public double armPID(double target, double state) {
 		// PID logic and then return the output 
 	}
 }

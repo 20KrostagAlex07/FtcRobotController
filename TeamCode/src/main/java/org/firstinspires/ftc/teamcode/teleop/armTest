@@ -38,6 +38,8 @@ public class armTest extends OpMode {
         // step (using the FTC Robot Controller app on the phone).
 
         arm = hardwareMap.get(DcMotor.class, "arm1");
+	
+	armClass armPID = new armClass;
 
 
         // Tell the driver that initialization is complete.

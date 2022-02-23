@@ -15,23 +15,42 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
 public class armClass {
 
-	/**
-	 * construct PID controller 
-	 * @param Kp Proportional coefficient  
-	 * @param Ki Integral coefficient 
-	 * @param Kd Derivative coefficient 
-	 */
-	public armPID(double Kp, double Ki, double Kd) {
+	
+	 //construct armPID 
+	 @param kP Proportional coefficient  
+	 @param kI Integral coefficient 
+	 @param kD Derivative coefficient 
+	 
+	public armPID(double kP, double kI, double kD) {
 
 	}
 
-	/**
-	 * update the PID controller output
-	 * @param target where we would like to be, also called the reference
-	 * @param state where we currently are, I.E. motor position 
-	 * @return the command to our motor, I.E. motor power 
-	 */
+	
+	 //update the PID controller output
+	 @param target
+	 @param state
+	 // @return the command to our motor, I.E. motor power 
+	 
 	public double armControl(double target, double state) {
 		// PID logic and then return the output 
+		
+		 //initialize stuff
+		 double errorLast;
+		 elapsed timer = new ElapsedTime();
+		 
+		 while(error >= 10){
+		 
+		 //PID logic
+		 double error = target - state;
+		 double outP = kP * error;
+		 double outI = 0;
+		 double outD = kD * ((error - errorLast) / timer.seconds());
+		 double update = outP + outI + outD; 
+			 
+		 //reset stuff
+		 double errorLast = error;
+		 timer.reset();
+		 }
+		 
 	}
 }

@@ -57,14 +57,11 @@ public class fieldGeneric extends OpMode {
         backRight = hardwareMap.get(DcMotor.class, "back_right");
 
         parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
-        
-        //braking to slow motor down faster
-        motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // disables the default velocity control
-		// this does NOT disable the encoder from counting, 
-		// but lets us simply send raw motor power.
-		motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+	// this does NOT disable the encoder from counting, 
+	// but lets us simply send raw motor power.
+	arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         
         //Initialize gyro
         imu.initialize(parameters);

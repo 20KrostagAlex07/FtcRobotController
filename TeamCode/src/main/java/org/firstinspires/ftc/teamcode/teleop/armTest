@@ -15,7 +15,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
 
-@TeleOp(name = "Arm Test", group = "The Fake Deal")
+@TeleOp(name = "Arm Test", group = "The Real Deal")
 
 public class armTest extends OpMode {
     // Declare OpMode members.
@@ -86,6 +86,7 @@ public class armTest extends OpMode {
         } else {
             arm.setPower(gamepad2.left_stick_y * 0.7);
         }
+
 
 
 

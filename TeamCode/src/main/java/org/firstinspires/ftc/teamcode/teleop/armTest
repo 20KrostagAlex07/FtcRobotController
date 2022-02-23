@@ -95,7 +95,15 @@ public class armTest extends OpMode {
             arm.setPower(gamepad2.left_stick_y * 0.7);
         }
 
+	int targetPosition = 100;
 
+		while (opModeIsActive()) {
+			// update pid controller 
+			double update = armPID.armControl(targetPosition,
+			                         arm.getCurrentPosition());
+			// assign motor the PID output 
+			arm.setPower(update);
+		}
 
 
             

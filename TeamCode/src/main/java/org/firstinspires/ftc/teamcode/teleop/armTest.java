@@ -68,6 +68,11 @@ public class armTest extends OpMode {
 		arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 		
 		ElapsedTime timer = new ElapsedTime();
+		boolean twoA = false;
+		double targetPosition;	
+		double error;
+		double lastError;
+		double update ;
 	
 	}
 	
@@ -89,14 +94,22 @@ public class armTest extends OpMode {
 			arm.setPower(gamepad2.left_stick_y * 0.7);
 		}
 
-	if(gamepad2.a){
+	if(gamepad2.a && twoA = false){
 		
-	double targetPosition = 300;
+	twoA = true;
+		
+	targetPosition = 300;
 	
-	double error = targetPosition - arm.getCurrentPosition();
-	double lastError = error;
+	error = targetPosition - arm.getCurrentPosition();
+	lastError = error;
+	update = 0;
+	}
+	else if(gamepad2.a && twoA = true) {
+		twoA = false;
+		arm.setPower(0;)
+		}
 	
-	while (error >= 50){
+	while (twoA = true;){
 	
 		//reset time
 		reset.timer();
@@ -117,7 +130,6 @@ public class armTest extends OpMode {
 			} //gamepad2.b end
 		
 		} //while statement end
-	} //gamepad2.a end
 	
 } //loop() end
 	

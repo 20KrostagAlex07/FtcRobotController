@@ -66,6 +66,8 @@ public class armTest extends OpMode {
 		// this does NOT disable the encoder from counting, 
 		// but lets us simply send raw motor power.
 		arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+		
+		ElapsedTime timer = new ElapsedTime();
 	
 	}
 	
@@ -88,17 +90,26 @@ public class armTest extends OpMode {
 		}
 
 	if(gamepad2.a){
-	double targetPosition = 360;
+		
+	double targetPosition = 300;
 	
 	double error = targetPosition - arm.getCurrentPosition();
+	double lastError = error;
 	
-	while (error >= 100){
+	while (error >= 50){
 	
+		//reset time
+		reset.timer();
+		
 		//Use PID logic
-		double update = armPID.armControl(targetPosition, arm.getCurrentPosition());
+		armPID.armControl(targetPosition, arm.getCurrentPosition(), error, lastError, timer.seconds());
 		
 		//Assign arm the PID update value 
-		arm.setPower(update);
+		arm.setPower(output);
+		
+		//Reassess lastError and Error
+		lastError = error;
+		error = targetPosition - arm.getCurrentPosition
 		
 		//Emergency stop
 		if(gamepad2.b){
@@ -106,7 +117,7 @@ public class armTest extends OpMode {
 			} //gamepad2.b end
 		
 		} //while statement end
-	} //gamepad1.a end
+	} //gamepad2.a end
 	
 } //loop() end
 	

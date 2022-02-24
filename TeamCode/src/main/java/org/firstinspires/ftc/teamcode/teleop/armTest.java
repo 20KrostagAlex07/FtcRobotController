@@ -112,7 +112,7 @@ public class armTest extends OpMode {
 	
 	
 	@Override
-	public void stop(); {
+	public void stop() {
 	//Code to run ONCE after the driver hits STOP
 	} //stop() end
 } //class end bracket

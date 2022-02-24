@@ -4,20 +4,26 @@
 //2. ArmClass ArmPID =  new ArmClass (0.7, 0.0, 0.0) does not work--it says that arguments arent required but i have no idea why!
 //3. thats all for now
 
-package FreightFrenzy.TeleOp;
+package org.firstinspires.ftc.teamcode.teleop;
 
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import org.firstinspires.ftc.teamcode.ArmClass;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+
+import https/github.com/JavaJokers/FtcRobotController/blob/master/TeamCode/src/main/java/org/firstinspires/ftc/teamcode/teleop/armClass.java
 
 
-@TeleOp(name = "Arm Test", group = "The Real Deal")
+//Start TeleOp
+@TeleOp(name = "Real Arm Test", group = "The Real Deal")
 
-public class ArmTest extends LinearOpMode {
+public class armTest extends OpMode {
 
 	 // Declare OpMode members.
 	private ElapsedTime runtime = new ElapsedTime();
@@ -26,12 +32,11 @@ public class ArmTest extends LinearOpMode {
 	private int dir = -1;
 	private double previousHeading = 0;
 	private double integratedHeading = 0;
-	ArmClass ArmPID = new ArmClass(0.7, 0.0, 0.0);
-	/*
-	 * Code to run ONCE when the driver hits INIT
-	 */
+	armClass armPID = new armClass(0.7, 0.0, 0.0);
+	
+	
 	@Override
-	public void runOpMode() {
+	public void init() {
 		telemetry.addData("Status", "Initialized");
 
 		// Initialize the hardware variables. Note that the strings used here as parameters
@@ -44,6 +49,11 @@ public class ArmTest extends LinearOpMode {
 
 		// Tell the driver that initialization is complete.
 		telemetry.addData("Status", "Initialized");
+	}
+		
+	
+	@Override
+	public void start() {
 
 		//reset timer
 		runtime.reset();
@@ -57,10 +67,11 @@ public class ArmTest extends LinearOpMode {
 		// but lets us simply send raw motor power.
 		arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 	
-		waitForStart();
+	}
 	
-	while (opModeIsActive()) {
 		
+	@Override
+	public void loop() {
 //GamePad 2 Controls
 		
 		
@@ -83,23 +94,25 @@ public class ArmTest extends LinearOpMode {
 	
 	while (error >= 100){
 	
-	//PID logic
-	double update = ArmPID.ArmControl(targetPosition, arm.getCurrentPosition());
-	//assign arm the PID update value 
-	arm.setPower(update);
+		//Use PID logic
+		double update = armPID.armControl(targetPosition, arm.getCurrentPosition());
+		
+		//Assign arm the PID update value 
+		arm.setPower(update);
+		
+		//Emergency stop
+		if(gamepad2.b){
+			break;
+			} //gamepad2.b end
+		
+		} //while statement end
+	} //gamepad1.a end
 	
-	if(gamepad2.b){
-		break;
-	}
-	}
-	}
-	}
+} //loop() end
 	
 	
-	}
-
-	}
-
-	/*
-	 * Code to run ONCE after the driver hits STOP
-	 */
+	@Override
+	public void stop(); {
+	//Code to run ONCE after the driver hits STOP
+	} //stop() end
+} //class end bracket

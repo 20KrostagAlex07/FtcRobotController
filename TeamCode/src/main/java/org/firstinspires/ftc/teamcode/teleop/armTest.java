@@ -1,7 +1,7 @@
 //CURRENT ERRORS
 
 //1. Stop() is not working--possible fix by using regular "extends OpMode"
-//2. ArmClass ArmPID =  new ArmClass (0.7, 0.0, 0.0) does not work--it says that arguments arent required but i have no idea why!
+//2. ArmClass ArmPID =  new ArmClass (0.7, 0.0, 0.0) does not work--it says that arguments arent required but i have no idea why
 //3. thats all for now
 
 package org.firstinspires.ftc.teamcode.teleop;
@@ -94,6 +94,8 @@ public class armTest extends OpMode {
 			arm.setPower(gamepad2.left_stick_y * 0.7);
 		}
 
+		
+	//Should activate PID
 	if(gamepad2.a && twoA = false){
 		
 	twoA = true;
@@ -102,11 +104,14 @@ public class armTest extends OpMode {
 	error = targetPosition - arm.getCurrentPosition();
 	lastError = error; 
 	}
+		
+	//Should stop PID
 	else if(gamepad2.a && twoA = true) {
 		twoA = false;
 		arm.setPower(0;)
 		}
 	
+	//The PID
 	while (twoA = true;){
 		
 		//calculate error

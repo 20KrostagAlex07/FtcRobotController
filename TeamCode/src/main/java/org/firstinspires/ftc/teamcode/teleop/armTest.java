@@ -102,7 +102,6 @@ public class armTest extends OpMode {
 	
 	error = targetPosition - arm.getCurrentPosition();
 	lastError = error;
-	update = 0;
 	}
 	else if(gamepad2.a && twoA = true) {
 		twoA = false;
@@ -115,10 +114,10 @@ public class armTest extends OpMode {
 		reset.timer();
 		
 		//Use PID logic
-		armPID.armControl(targetPosition, arm.getCurrentPosition(), error, lastError, timer.seconds());
+		update = armPID.armControl(targetPosition, arm.getCurrentPosition(), error, lastError, timer.seconds());
 		
 		//Assign arm the PID update value 
-		arm.setPower(output);
+		arm.setPower(update);
 		
 		//Reassess lastError and Error
 		lastError = error;

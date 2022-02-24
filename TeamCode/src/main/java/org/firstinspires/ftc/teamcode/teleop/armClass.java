@@ -39,7 +39,6 @@ public class armClass {
 		 double outI = 0;
 		 double outD = kD * ((error - errorLast) / time);
 		 double output = outP + outI + outD;
-		 errorLast = error;
 
 		 //return output value to motor
 		 return output;

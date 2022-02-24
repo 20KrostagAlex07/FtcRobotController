@@ -29,9 +29,8 @@ public class armClass {
 
 	
 	 //update the PID controller output
-	 // @return the command to our motor, I.E. motor power 
 	 
-	public void armControl(double target, double state) {
+	public double armControl(double target, double state) {
 		// PID logic and then return the output 
 		
 		 //initialize stuff
@@ -45,11 +44,14 @@ public class armClass {
 		 double outP = kP * error;
 		 double outI = 0;
 		 double outD = kD * ((error - errorLast) / timer.seconds());
-		 double update = outP + outI + outD; 
+		 double output = outP + outI + outD; 
 			 
 		 //reset stuff
 		 errorLast = error;
 		 timer.reset();
+
+		 //return output value to motor
+		 return output;
 	}
 }
 		

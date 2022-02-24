@@ -30,7 +30,7 @@ public class armClass {
 	
 	 //update the PID controller output
 	 
-	public double armControl(double target, double state, double error, double errorLast, double time) {
+	public double armControl(double error, double errorLast, double time) {
 		// PID logic and then return the output 
 		 
 		 //PID logic

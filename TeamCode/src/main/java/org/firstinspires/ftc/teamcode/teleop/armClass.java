@@ -43,7 +43,6 @@ public class armClass {
 
 		 //return output value to motor
 		 return output;
-		 return errorLast
 	}
 }
 		

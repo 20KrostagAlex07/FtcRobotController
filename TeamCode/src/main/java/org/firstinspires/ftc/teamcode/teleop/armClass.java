@@ -30,48 +30,21 @@ public class armClass {
 	
 	 //update the PID controller output
 	 
-	public double armControl(double target, double state) {
+	public double armControl(double target, double state, double error, double errorLast, double time) {
 		// PID logic and then return the output 
-		
-		 //initialize stuff
-		 double error = target - state;
-		 double errorLast = 0;
-		 ElapsedTime timer = new ElapsedTime();
 		 
 		 //PID logic
-		 error = target - state;
 		 
 		 double outP = kP * error;
 		 double outI = 0;
-		 double outD = kD * ((error - errorLast) / timer.seconds());
-		 double output = outP + outI + outD; 
-			 
-		 //reset stuff
+		 double outD = kD * ((error - errorLast) / time);
+		 double output = outP + outI + outD;
 		 errorLast = error;
-		 timer.reset();
 
 		 //return output value to motor
 		 return output;
+		 return errorLast
 	}
 }
 		
-		 //initialize stuff
-		 double errorLast;
-		 elapsed timer = new ElapsedTime();
-		 
-		 while(error >= 10){
-		 
-		 //PID logic
-		 double error = target - state;
-		 double outP = kP * error;
-		 double outI = 0;
-		 double outD = kD * ((error - errorLast) / timer.seconds());
-		 double update = outP + outI + outD; 
-			 
-		 //reset stuff
-		 double errorLast = error;
-		 timer.reset();
-		 }
-		 
-	}
 }

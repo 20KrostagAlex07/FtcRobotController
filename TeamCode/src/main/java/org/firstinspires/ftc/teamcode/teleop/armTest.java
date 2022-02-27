@@ -98,12 +98,12 @@ public class armTest extends OpMode {
 	//Should activate PID
 	if(gamepad2.a && twoA = false){
 		
-	twoA = true;
+		twoA = true;
 		
-	targetPosition = 300;
-	error = targetPosition - arm.getCurrentPosition();
-	lastError = error; 
-	}
+		targetPosition = 300;
+		error = targetPosition - arm.getCurrentPosition();
+		lastError = error; 
+		}
 		
 	//Should stop PID
 	else if(gamepad2.a && twoA = true) {
@@ -112,7 +112,7 @@ public class armTest extends OpMode {
 		}
 	
 	//The PID
-	while (twoA = true;){
+	while (twoA = true){
 		
 		//calculate error
 		error = targetPosition - arm.getCurrentPosition();
